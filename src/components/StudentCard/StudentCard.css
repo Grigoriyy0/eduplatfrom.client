@@ -1,0 +1,22 @@
+.student-card {
+    border-radius: 10px;
+    border: 1px solid #343B4F;
+    background-color: #0B1739;
+    color: white;
+    margin: 1em;
+    padding: 0;
+}
+
+.student-info {
+    text-align: start;
+    background-color: #0B1739;
+    margin: 0.2em;
+    padding-top: 0.5em;
+    padding-left: 0.3em;
+}
+
+.student-info-title {
+    background-color: #0B1739;
+    margin: 0.2em;
+    padding: 0.3em;
+}

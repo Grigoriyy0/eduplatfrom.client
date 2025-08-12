@@ -1,0 +1,19 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Dashboard from "./pages/Dashboard/Dashboard.jsx";
+import Calendar from "./pages/Calendar/Calendar.jsx";
+
+function App() {
+  return (
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/home" element={<Dashboard/>}/>
+          <Route path="/calendar" element={<Calendar />}/>
+        </Routes>
+      </BrowserRouter>
+    </>
+  )
+}
+
+export default App

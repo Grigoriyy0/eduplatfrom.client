@@ -1,0 +1,24 @@
+* {
+    background-color: #101935;
+}
+
+.students {
+    grid-area: 1 / 2 / 11 / 7;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 колонки */
+    gap: 1em; /* Отступ между карточками */
+    padding: 1em;
+    overflow-y: auto; /* Добавляем прокрутку если контент не помещается */
+}
+
+.Dashboard {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    grid-column-gap: 0;
+    grid-row-gap: 0;
+}
+
+.sidebar {
+    grid-area: 1 / 1 / 11 / 3;
+}

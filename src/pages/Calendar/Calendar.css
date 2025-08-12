@@ -1,0 +1,21 @@
+.calendar {
+    color: white;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    grid-column-gap: 0;
+    grid-row-gap: 0;
+}
+
+.p {
+    color: white;
+}
+
+.sidebar-wrapper {
+    grid-area: 1 / 1 / 11 / 2;
+}
+
+.calendar-wrapper {
+    grid-area: 1 / 2 / 11 / 7;
+    display: grid;
+}
