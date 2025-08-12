@@ -1,4 +1,5 @@
 import "./Sidebar.css";
+import {useNavigate} from "react-router-dom";
 
 function Sidebar({ onTabClick }) {
     const tabs = [
@@ -9,17 +10,19 @@ function Sidebar({ onTabClick }) {
         { id: 4, title: "Настройки", icon: "⚙️" },
     ];
 
+    const navigate = useNavigate();
+
     return (
         <div className="sidebar">
             <div className="sidebar-header">
-                <h2>Меню</h2>
+                <h2>EduNEXT Dashboard</h2>
             </div>
             <div className="sidebar-tabs">
                 {tabs.map((tab) => (
                     <div
                         key={tab.id}
                         className="sidebar-tab"
-                        onClick={() => onTabClick(tab.path)}
+                        onClick={() => onTabClick(navigate(tab.path))}
                     >
                         <span className="tab-icon">{tab.icon}</span>
                         <span className="tab-title">{tab.title}</span>

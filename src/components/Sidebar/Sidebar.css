@@ -1,19 +1,22 @@
 .sidebar {
     background-color: #101935;
-    border-right: 2px solid #2a3a5a;
     color: white;
     height: 100%;
     padding: 1em;
     box-sizing: border-box;
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
 }
 
 .sidebar-header {
+    border-right: 1px solid #2a3a5a;
     padding-bottom: 1em;
     border-bottom: 1px solid #2a3a5a;
-    margin-bottom: 1em;
 }
 
 .sidebar-tabs {
+    border-right: 1px solid #2a3a5a;
     display: flex;
     flex-direction: column;
     gap: 0.5em;
@@ -34,7 +37,7 @@
 }
 
 .sidebar-tab.active {
-    background-color: #3a5a78;
+    background-color: #2a3a5a;
 }
 
 .tab-icon {
