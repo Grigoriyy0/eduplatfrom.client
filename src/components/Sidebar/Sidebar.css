@@ -1,5 +1,5 @@
 .sidebar {
-    background-color: #101935;
+    background-color: #081028;
     color: white;
     height: 100%;
     padding: 1em;
@@ -17,6 +17,7 @@
 
 .sidebar-tabs {
     border-right: 1px solid #2a3a5a;
+    background-color: #081028;
     display: flex;
     flex-direction: column;
     gap: 0.5em;

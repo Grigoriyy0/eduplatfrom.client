@@ -1,0 +1,26 @@
+.chart-name{
+    color: lightgray;
+    font-weight: normal;
+    background-color: #0B1739;
+    border: 2px #0B1739;
+    border-radius: 10px;
+    margin-left: 10px;
+}
+
+.chart-info{
+    color: white;
+    font-size: 34px;
+    background-color: #0B1739;
+    margin-top: 0;
+    margin-left: 10px;
+}
+
+.chart{
+    display: flex;
+    flex-direction: column;
+    background-color: #0B1739;
+    width: 20%;
+    height: 30%;
+    border: 2px #0B1739;
+    border-radius: 10px;
+}

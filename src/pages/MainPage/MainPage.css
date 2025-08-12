@@ -1,0 +1,29 @@
+.main-page{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.sidebar-wrapper{
+    grid-area: 1 / 1 / 6 / 2;
+}
+
+.main-page-header{
+    grid-area: 1 / 2 / 2 / 6;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.content-wrapper{
+    grid-area: 2 / 2 / 6 / 6;
+    display: grid;
+}
+
+.title{
+    color: whitesmoke;
+    font-weight: bold;
+    font-size: 36px;
+}
