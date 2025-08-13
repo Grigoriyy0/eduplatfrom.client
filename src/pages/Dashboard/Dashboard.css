@@ -1,27 +1,49 @@
-* {
-    background-color: #081028;
-    font-family: Inter, sans-serif;
-    font-weight: 200;
-    font-size: 16px;
-}
-
 .students {
-    grid-area: 1 / 2 / 11 / 7;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 колонки */
-    gap: 1em; /* Отступ между карточками */
-    padding: 1em;
-    overflow-y: auto; /* Добавляем прокрутку если контент не помещается */
+    grid-area: 2 / 2 / 6 / 7;
+
 }
 
 .Dashboard {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(10, 1fr);
+    grid-template-rows: repeat(5, 1fr);
     grid-column-gap: 0;
     grid-row-gap: 0;
 }
 
 .sidebar {
-    grid-area: 1 / 1 / 11 / 2;
+    grid-area: 1 / 1 / 3 / 2;
+
+}
+
+.header {
+    grid-area: 1 / 2 / 2 / 7;
+}
+
+.header-wrapper-title{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.add-student-btn{
+    color: white;
+    border: none;
+    background-color: purple;
+    width: 150px;
+    height: 40px;
+    border-radius: 10px;
+    margin-right: 40px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: 0.5s linear;
+}
+
+.add-student-btn:hover{
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    transition: 0.5s linear;
 }
