@@ -214,7 +214,6 @@ export default function CustomCalendar({ lessons }) {
             )}
 
             {/* Второе модальное окно (перенос) */}
-            {/* Второе модальное окно (перенос) */}
             {selectedLesson && rescheduleMode && (
                 <div className="modal-overlay" onClick={() => setRescheduleMode(false)}>
                     <div className="modal" onClick={(e) => e.stopPropagation()}>

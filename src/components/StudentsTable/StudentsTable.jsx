@@ -3,19 +3,6 @@ import "./StudentTable.css";
 
 const dayMap = ["Вс","Пн","Вт","Ср","Чт","Пт","Сб"]; // day: 0..6 или 1..7 — подстраховка ниже
 
-function formatTimeSlots(timeSlots = []) {
-    if (!timeSlots.length) return "—";
-    return timeSlots
-        .map(ts => {
-            // поддержим и 1..7 (где 1 — Пн), и 0..6
-            const idx = ((ts.day ?? 0) + 6) % 7; // 1->Пн, 2->Вт ... 7->Вс  |  0->Вс
-            const day = dayMap[idx];
-            const s = ts.startTime?.slice(0,5) ?? "";
-            const e = ts.endTime?.slice(0,5) ?? "";
-            return `${day} ${s}–${e}`;
-        })
-        .join(", ");
-}
 
 export default function StudentsTable({
                                           students = [],
@@ -26,14 +13,48 @@ export default function StudentsTable({
                                       }) {
     const [page, setPage] = useState(0);
 
+    const ApiKey = import.meta.env.VITE_API_KEY;
+
     const paged = useMemo(() => {
         const start = page * rowsPerPage;
         return students.slice(start, start + rowsPerPage);
     }, [students, page, rowsPerPage]);
 
+    const [selectedStudent, setSelectedStudent] = useState(null);
+    const [confirmDelete, setConfirmDelete] = useState(false);
+
+    const[notification, setNotification] = useState(null);
+
     const totalPages = Math.max(1, Math.ceil(students.length / rowsPerPage));
     const canPrev = page > 0;
     const canNext = page < totalPages - 1;
+
+
+    const handleDeleteConfirm = () => {
+
+        fetch(`${ApiKey}/students/delete/${confirmDelete}`, {
+            method: "DELETE",
+            headers: {
+                Accept: "application/json",
+            }
+        }).then(r => {
+            if (r.ok) {
+                setNotification("Студент удалён ✅");
+                // через 1 сек обновим страницу
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            } else {
+                setNotification("Ошибка при удалении ❌");
+            }
+        })
+            .catch(err => {
+                console.error(err);
+                setNotification("Ошибка при удалении ❌");
+            });
+
+        setConfirmDelete(false);
+    };
 
     return (
         <div className="st-card">
@@ -93,18 +114,42 @@ export default function StudentsTable({
                                 <td className="st-lesson-price">{(s.lessonPrice ?? 0).toLocaleString("ru-RU")} ₽</td>
 
                                 <td className="st-actions" onClick={e => e.stopPropagation()}>
-                                    <button className="st-btn st-btn--ghost" title="Редактировать" onClick={() => onEdit?.(s)}>
+                                    <button className="st-btn st-btn--ghost" title="Редактировать" onClick={() => setSelectedStudent(s)}>
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
                                             <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" stroke="currentColor" strokeWidth="1.5" fill="currentColor"/>
                                             <path d="M20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" fill="currentColor"/>
                                         </svg>
                                     </button>
-                                    <button className="st-btn st-btn--ghost st-btn--danger" title="Удалить" onClick={() => onDelete?.(s.studentId)}>
+                                    <button className="st-btn st-btn--ghost st-btn--danger" title="Удалить" onClick={() => setConfirmDelete(s.studentId)}>
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
                                             <path d="M9 3h6l1 2h4v2H4V5h4l1-2zM6 9h12l-1 11H7L6 9z" fill="currentColor"/>
                                         </svg>
                                     </button>
                                 </td>
+
+                                {/* модалка подтверждения */}
+                                {confirmDelete && (
+                                    <div className="modal-overlay" onClick={() => setConfirmDelete(false)}>
+                                        <div className="modal" onClick={(e) => e.stopPropagation()}>
+                                            <h3 className="lesson-modal-info">Вы уверены?</h3>
+                                            <p className="lesson-modal-info">Удалить студента {s.firstName} {s.lastName}?</p>
+                                            <div className="modal-actions">
+                                                <button
+                                                    className="delete-btn"
+                                                    onClick={handleDeleteConfirm}
+                                                >
+                                                    Да, удалить
+                                                </button>
+                                                <button
+                                                    className="close-btn"
+                                                    onClick={() => setConfirmDelete(false)}
+                                                >
+                                                    Отмена
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
                             </tr>
                         );
                     })}
@@ -137,6 +182,32 @@ export default function StudentsTable({
                 </div>
 
             </div>
+
+            {/* Модалка */}
+            {selectedStudent && (
+                <div className="modal-overlay" onClick={() => setSelectedStudent(null)}>
+                    <div className="modal" onClick={(e) => e.stopPropagation()}>
+                        <h3 className="lesson-modal-info">Ученик</h3>
+                        <p className="lesson-modal-info">Имя <strong className="lesson-modal-info">{selectedStudent.firstName} {selectedStudent.lastName}</strong></p>
+                        <p className="lesson-modal-info">Цена урока <strong className="lesson-modal-info">{selectedStudent.lessonPrice}</strong></p>
+                        <p className="lesson-modal-info">Почта <strong className="lesson-modal-info">{selectedStudent.email}</strong></p>
+                        <p className="lesson-modal-info">Количество уроков в абонементе <strong className="lesson-modal-info">{selectedStudent.subscribedLessonsCount}</strong></p>
+
+                        <div className="modal-actions">
+                            <button className="reschedule-btn" onClick={() => openReschedule(selectedLesson)}>Редактировать</button>
+                            <button className="complete-btn" onClick={() => handleComplete(selectedLesson)}>Добавить оплату</button>
+                        </div>
+                        <button className="close-btn" onClick={() => setSelectedStudent(null)}>Закрыть</button>
+                    </div>
+                </div>
+            )}
+
+            {/* Уведомление */}
+            {notification && (
+                <div className="notification">
+                    {notification}
+                </div>
+            )}
 
 
         </div>
