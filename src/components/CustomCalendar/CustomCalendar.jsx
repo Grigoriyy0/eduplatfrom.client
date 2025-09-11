@@ -123,11 +123,11 @@ export default function CustomCalendar({ lessons }) {
     return (
         <div className="calendar">
             <div className="calendar-header">
-                <button onClick={prevWeek} className="change-week-btn">Назад</button>
+                <button onClick={prevWeek} className="change-week-btn">Previous week</button>
                 <span className="week-info">
                     {weekStart.format("MMM D")} - {weekStart.add(6, "day").format("MMM D")}
                 </span>
-                <button onClick={nextWeek} className="change-week-btn">Вперёд</button>
+                <button onClick={nextWeek} className="change-week-btn">Next week</button>
             </div>
 
             <div className="calendar-grid">

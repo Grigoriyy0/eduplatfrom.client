@@ -1,13 +1,13 @@
 .main-page{
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    grid-column-gap: 0;
+    grid-row-gap: 0;
 }
 
 .sidebar-wrapper{
-    grid-area: 1 / 1 / 6 / 2;
+    grid-area: 1 / 1 / 11 / 2;
 }
 
 .main-page-header{
@@ -18,8 +18,9 @@
 }
 
 .content-wrapper{
-    grid-area: 2 / 2 / 6 / 6;
+    grid-area: 1 / 2 / 11 / 7;
     display: grid;
+    color: #0B1739;
 }
 
 .title{
