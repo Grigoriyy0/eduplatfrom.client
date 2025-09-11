@@ -167,7 +167,8 @@
     padding: 6px 10px;
     cursor: pointer;
     transition: transform .06s ease, background .15s ease, color .15s ease, border-color .15s ease;
-    height: 55px;
+    height: 30px;
+    width: 55px;
 }
 
 .st-btn:disabled {
@@ -233,40 +234,105 @@
 }
 
 
+/* Модальное окно подтверждения */
 .modal-overlay {
     position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.modal {
-    background: white;
+    z-index: 1000;
     padding: 20px;
+}
+
+.confirm-modal {
+    background: white;
+    padding: 30px;
     border-radius: 12px;
-    min-width: 300px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    text-align: center;
 }
 
-.modal-actions {
+.confirm-modal-title {
+    margin: 0 0 15px 0;
+    color: black;
+    background: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.confirm-modal-text {
+    margin: 0 0 25px 0;
+    color: black;
+    background: white;
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+.confirm-modal-actions {
+    color: black;
+    background: white;
     display: flex;
-    gap: 10px;
-    margin-top: 15px;
+    gap: 15px;
+    justify-content: center;
 }
 
-.delete-btn {
+.confirm-delete-btn {
     background: #e74c3c;
     color: white;
-    padding: 8px 12px;
+    padding: 12px 24px;
     border: none;
     border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 120px;
+    font-size: 1rem;
 }
 
-.close-btn {
-    background: #bdc3c7;
-    color: black;
-    padding: 8px 12px;
+.confirm-delete-btn:hover {
+    background: #c0392b;
+    transform: translateY(-2px);
+}
+
+.confirm-cancel-btn {
+    background: #ecf0f1;
+    color: #2c3e50;
+    padding: 12px 24px;
     border: none;
     border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 120px;
+    font-size: 1rem;
+}
+
+.confirm-cancel-btn:hover {
+    background: #bdc3c7;
+    transform: translateY(-2px);
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 480px) {
+    .confirm-modal {
+        padding: 20px;
+        margin: 10px;
+    }
+
+    .confirm-modal-actions {
+        flex-direction: column;
+    }
+
+    .confirm-delete-btn,
+    .confirm-cancel-btn {
+        width: 100%;
+        min-width: unset;
+    }
 }

@@ -16,6 +16,9 @@ input{
     height: 25px;
     margin-top: 5px;
     margin-bottom: 5px;
+    background-color: white;
+    border: 1px solid white;
+    border-radius: 5px;
 }
 .Wrapper{
     margin-top: 20px;
@@ -42,4 +45,13 @@ button:hover{
 .wrap_input{
     display: flex;
     flex-direction: column;
+}
+
+.data {
+    color: white;
+}
+
+.error-message{
+    color: red;
+    font-weight: bold;
 }

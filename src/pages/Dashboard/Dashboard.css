@@ -47,3 +47,45 @@
     cursor: pointer;
     transition: 0.5s linear;
 }
+
+.create-btn{
+    color: white;
+    background-color: green;
+    border-radius: 5px;
+}
+
+.cancel-btn{
+    color: white;
+    background-color: red;
+    border-radius: 5px;
+}
+
+.add-stdnt-inpt{
+    border: 1px solid;
+}
+
+.modal{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.modal-actions{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+label{
+    color: black;
+    background-color: white;
+}
+
+.form-row{
+    background-color: white;
+}
+
+.modal-title{
+    color: black;
+    background-color: white;
+}

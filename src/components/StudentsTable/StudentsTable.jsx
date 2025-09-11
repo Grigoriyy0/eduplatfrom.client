@@ -1,13 +1,9 @@
 import React, { useMemo, useState } from "react";
 import "./StudentTable.css";
 
-const dayMap = ["Вс","Пн","Вт","Ср","Чт","Пт","Сб"]; // day: 0..6 или 1..7 — подстраховка ниже
-
 
 export default function StudentsTable({
                                           students = [],
-                                          onEdit,
-                                          onDelete,
                                           onRowClick,
                                           rowsPerPage = 10,
                                       }) {
@@ -130,18 +126,18 @@ export default function StudentsTable({
                                 {/* модалка подтверждения */}
                                 {confirmDelete && (
                                     <div className="modal-overlay" onClick={() => setConfirmDelete(false)}>
-                                        <div className="modal" onClick={(e) => e.stopPropagation()}>
-                                            <h3 className="lesson-modal-info">Вы уверены?</h3>
-                                            <p className="lesson-modal-info">Удалить студента {s.firstName} {s.lastName}?</p>
-                                            <div className="modal-actions">
+                                        <div className="confirm-modal" onClick={(e) => e.stopPropagation()}>
+                                            <h3 className="confirm-modal-title">Вы уверены?</h3>
+                                            <p className="confirm-modal-text">Удалить студента {s.firstName} {s.lastName}?</p>
+                                            <div className="confirm-modal-actions">
                                                 <button
-                                                    className="delete-btn"
+                                                    className="confirm-delete-btn"
                                                     onClick={handleDeleteConfirm}
                                                 >
                                                     Да, удалить
                                                 </button>
                                                 <button
-                                                    className="close-btn"
+                                                    className="confirm-cancel-btn"
                                                     onClick={() => setConfirmDelete(false)}
                                                 >
                                                     Отмена
