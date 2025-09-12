@@ -10,14 +10,7 @@
     grid-area: 1 / 1 / 11 / 2;
 }
 
-.main-page-header{
-    grid-area: 1 / 2 / 2 / 6;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.content-wrapper{
+.main-content{
     grid-area: 1 / 2 / 11 / 7;
     display: grid;
     color: #0B1739;

@@ -7,7 +7,7 @@ function Sidebar({ onTabClick }) {
         { id: 1, title: "Students", icon: "👨‍🎓", path: "/students" },
         { id: 2, title: "Calendar", icon: "📅", path: "/calendar" },
         { id: 3, title: "Finance", icon: "💰" },
-        { id: 4, title: "Setting", icon: "⚙️" },
+        { id: 4, title: "Settings", icon: "⚙️" },
     ];
 
     const navigate = useNavigate();

@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import "./Dashboard.css"
 import Sidebar from "../../components/Sidebar/Sidebar.jsx";
 import StudentsTable from "../../components/StudentsTable/StudentsTable.jsx";
+import AddStudentForm from "../../components/AddStudentForm/AddStudentForm.jsx";
 
 function Dashboard() {
 
@@ -10,6 +11,7 @@ function Dashboard() {
 
     const [students, setStudents] = useState([]);
     const[addStudent, setAddStudent] = useState(false);
+    const[notification, setNotification] = useState(null);
 
     useEffect(() => {
         fetch(`${ApiKey}/students/all`)
@@ -22,6 +24,14 @@ function Dashboard() {
     const handleEdit = (student) => {
         console.log("Edit:", student);
     };
+
+    const handleCloseAddStudentModal = () => {
+        setAddStudent(false);
+    }
+
+    const handleSetNotification = (val) => {
+        setNotification(val);
+    }
 
     const handleDelete = (id) => {
         console.log("Delete student with ID:", id);
@@ -47,48 +57,11 @@ function Dashboard() {
                         onDelete={handleDelete}/>
             </div>
 
-            {addStudent && (
-                <div className="modal-overlay" onClick={() => setAddStudent(null)}>
-                    <div className="modal" onClick={(e) => e.stopPropagation()}>
-                        <h3 className="modal-title">Добавить ученика</h3>
+            {addStudent && <AddStudentForm onCloseAction={handleCloseAddStudentModal} onNotificationSet={handleSetNotification} />}
 
-                        <div className="modal-form">
-                            <div className="form-row">
-                                <label>Имя</label>
-                                <input type="text" className="add-stdnt-inpt"/>
-                            </div>
-
-                            <div className="form-row">
-                                <label>Фамилия</label>
-                                <input type="text" className="add-stdnt-inpt"/>
-                            </div>
-
-                            <div className="form-row">
-                                <label>Цена урока</label>
-                                <input type="text" className="add-stdnt-inpt"/>
-                            </div>
-
-                            <div className="form-row">
-                                <label>Почта</label>
-                                <input type="text" className="add-stdnt-inpt"/>
-                            </div>
-
-                            <div className="form-row">
-                                <label>Количество уроков в абонементе</label>
-                                <input type="text" className="add-stdnt-inpt"/>
-                            </div>
-
-                            <div className="form-row">
-                                <label>Количество оплаченных уроков</label>
-                                <input type="text" className="add-stdnt-inpt"/>
-                            </div>
-                        </div>
-
-                        <div className="modal-actions">
-                            <button className="create-btn" onClick={null}>Добавить</button>
-                            <button className="cancel-btn" onClick={() => setAddStudent(false)}>Отмена</button>
-                        </div>
-                    </div>
+            {notification && (
+                <div className="notification">
+                    {notification}
                 </div>
             )}
         </div>
