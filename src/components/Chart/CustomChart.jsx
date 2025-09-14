@@ -1,10 +1,10 @@
 import "./CustomChart.css"
 
-function CustomChart(props) {
+function CustomChart({chartName, chartInfo}) {
     return (
         <div className="chart">
-            <p className="chart-name">{props.chartName}</p>
-            <p className="chart-info">{props.chartInfo}</p>
+            <p className="chart-name">{chartName}</p>
+            <p className="chart-info">{chartInfo}</p>
         </div>
     )
 }

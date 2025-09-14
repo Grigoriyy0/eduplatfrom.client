@@ -1,23 +1,52 @@
-.main-page{
+.main-page {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: repeat(10, 1fr);
     grid-column-gap: 0;
     grid-row-gap: 0;
+    height: 100vh; /* Добавьте высоту */
 }
 
-.sidebar-wrapper{
+.sidebar-wrapper {
     grid-area: 1 / 1 / 11 / 2;
 }
 
-.main-content{
+.main-content {
     grid-area: 1 / 2 / 11 / 7;
-    display: grid;
     color: #0B1739;
+    display: flex;
+    flex-direction: column;
+    padding: 20px; /* Добавьте отступы */
+    overflow-y: auto; /* Добавьте прокрутку если нужно */
 }
 
-.title{
-    color: whitesmoke;
+.title {
+    display: flex;
+    color: white; /* Измените цвет если нужно */
     font-weight: bold;
     font-size: 36px;
+    margin-bottom: 0;
+    align-items: center; /* Центрируем по вертикали */
+    height: auto; /* Убираем фиксированную высоту */
+    padding: 20px 0; /* Добавляем отступы */
+}
+
+.main-info {
+    margin-top: 1em; /* Уменьшаем отступ */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex: 1; /* Занимает оставшееся пространство */
+}
+
+.chart-title {
+    background-color: #0B1739;
+    color: #AEB9E1;
+}
+
+.chart-payload{
+    background-color: #0B1739;
+    color: white;
+    font-weight: bold;
 }
