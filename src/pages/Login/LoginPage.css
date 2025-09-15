@@ -1,0 +1,57 @@
+.App{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+
+}
+label{
+    display: flex;
+    flex-direction: column;
+}
+input{
+    width: 300px;
+    height: 25px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background-color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+}
+.Wrapper{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+button{
+    border: none;
+    background-color: black;
+    color: white;
+    width: 175px;
+    height: 35px;
+    border-radius: 30px;
+}
+
+button:hover{
+    background-color: white;
+    color: black;
+    border: solid;
+    opacity: 10;
+    transition: 0.5s;
+}
+.wrap_input{
+    display: flex;
+    flex-direction: column;
+}
+
+.data {
+    color: white;
+}
+
+.error-message{
+    color: red;
+    font-weight: bold;
+}

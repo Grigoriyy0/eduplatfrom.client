@@ -1,8 +1,8 @@
 .sidebar {
-    background-color: #101935;
+    background-color: #081028;
     color: white;
     height: 100%;
-    padding: 1em;
+    margin-right: 10px;
     box-sizing: border-box;
     font-family: Inter, sans-serif;
     font-weight: 400;
@@ -17,22 +17,27 @@
 
 .sidebar-tabs {
     border-right: 1px solid #2a3a5a;
+    background-color: #081028;
     display: flex;
     flex-direction: column;
     gap: 0.5em;
 }
 
 .sidebar-tab {
-    display: flex;
-    align-items: center;
     gap: 1em;
     padding: 0.8em 1em;
-    border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
 }
 
 .sidebar-tab:hover {
+    background-color: #2a3a5a;
+}
+
+.sidebar-tab:hover .tab-icon,
+.sidebar-tab:hover .tab-title {
     background-color: #2a3a5a;
 }
 
@@ -40,10 +45,19 @@
     background-color: #2a3a5a;
 }
 
+.sidebar-tab.active .tab-icon,
+.sidebar-tab.active .tab-title {
+    background-color: #2a3a5a;
+}
+
 .tab-icon {
     font-size: 1.2em;
+    background-color: #081028;
+    transition: background-color 0.2s;
 }
 
 .tab-title {
     font-size: 0.9em;
+    background-color: #081028;
+    transition: background-color 0.2s;
 }

@@ -1,5 +1,4 @@
-.calendar {
-    color: white;
+.calendar-page {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: repeat(10, 1fr);
@@ -7,9 +6,6 @@
     grid-row-gap: 0;
 }
 
-.p {
-    color: white;
-}
 
 .sidebar-wrapper {
     grid-area: 1 / 1 / 11 / 2;
@@ -18,4 +14,6 @@
 .calendar-wrapper {
     grid-area: 1 / 2 / 11 / 7;
     display: grid;
+    color: #0B1739;
 }
+

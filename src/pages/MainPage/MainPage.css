@@ -1,0 +1,69 @@
+.main-page {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    grid-column-gap: 0;
+    grid-row-gap: 0;
+    height: 100vh; /* Добавьте высоту */
+}
+
+.sidebar-wrapper {
+    grid-area: 1 / 1 / 11 / 2;
+}
+
+.main-content {
+    grid-area: 1 / 2 / 11 / 7;
+    color: #0B1739;
+    display: flex;
+    flex-direction: column;
+    padding: 20px; /* Добавьте отступы */
+    overflow-y: auto; /* Добавьте прокрутку если нужно */
+}
+
+.title {
+    display: flex;
+    color: white; /* Измените цвет если нужно */
+    font-weight: bold;
+    font-size: 36px;
+    margin-bottom: 0;
+    align-items: center; /* Центрируем по вертикали */
+    height: auto; /* Убираем фиксированную высоту */
+    padding: 20px 0; /* Добавляем отступы */
+}
+
+.main-info {
+    margin-top: 0.5em; /* Уменьшаем отступ */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.chart {
+    background-color: #0B1739;
+    padding: 15px;
+    border-radius: 8px;
+    flex: 1;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.chart-title {
+    background-color: transparent;
+    color: #AEB9E1;
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.chart-payload {
+    background-color: transparent;
+    color: white;
+    font-weight: bold;
+    margin: 5px 0;
+    font-size: 16px;
+    line-height: 1.4;
+}

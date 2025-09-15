@@ -1,0 +1,347 @@
+:root {
+    --bg-card: #0E1A2B;
+    --bg-elev: #15233A;
+    --row-hover: #1B2B48;
+    --text: #E6EAF2;
+    --muted: #A3B1C6;
+    --line: #243654;
+    --accent: #4DA3FF;
+    --accent-2: #7CC0FF;
+    --danger: #FF6B6B;
+    --shadow: 0 10px 30px rgba(0, 0, 0, .25);
+}
+
+/* Карточка */
+.st-card {
+    border: 1px solid #343B4F;
+    color: var(--text);
+    border-radius: 10px;
+    padding: 0;
+    overflow: hidden; /* keep rounded corners and border visible at edges */
+}
+
+/* Шапка */
+.st-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px 12px;
+    background-color: #0B1738;
+}
+
+.st-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    background-color: #0B1738;
+}
+
+.st-counter {
+    color: #0B1738;
+    font-size: 13px;
+}
+
+/* Таблица */
+.st-table-wrap {
+    overflow-x: auto;
+    border-bottom: 1px solid var(--line);
+    border-top: 1px solid var(--line);
+    width: 100%;
+}
+
+.st-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.st-table thead th {
+    text-align: left;
+    font-weight: 600;
+    color: var(--muted);
+    padding: 14px 16px;
+    background: #0B1738;
+    border-bottom: 1px solid var(--line);
+}
+
+.st-col-name {
+    min-width: 340px;
+}
+
+.st-col-price {
+    min-width: 120px;
+}
+
+.st-col-actions {
+    width: 120px;
+    text-align: center;
+}
+
+.st-table tbody td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+}
+
+.st-row {
+    background-color: #0a1330;
+    transition: background .15s ease, transform .08s ease;
+}
+
+
+/* Ячейка с именем */
+.st-name-cell {
+    align-items: center;
+    gap: 12px;
+}
+
+.st-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    color: #0b1220;
+    background: radial-gradient(110% 110% at 20% 10%, #9fd0ff 0%, #5aa9ff 50%, #2d7bf3 100%);
+    box-shadow: 0 4px 12px rgba(45, 123, 243, .35);
+}
+
+.st-avatar span {
+    font-size: 14px;
+}
+
+.st-name-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.st-name {
+    font-weight: 600;
+    color: white;
+    height: 20px;
+}
+
+.st-subtext {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+/* Мелкий текст */
+.st-muted {
+    color: var(--muted);
+}
+
+/* Прогресс */
+.st-progress {
+    height: 8px;
+    background: #0f1b2d;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+
+.st-progress__bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    border-right: 1px solid rgba(255, 255, 255, .35);
+}
+
+.st-progress-text {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+/* Действия */
+.st-actions {
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.st-btn {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: transform .06s ease, background .15s ease, color .15s ease, border-color .15s ease;
+    height: 30px;
+    width: 55px;
+}
+
+.st-btn:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+.st-btn:hover {
+    background: var(--bg-elev);
+}
+
+.st-btn:active {
+    transform: translateY(1px);
+}
+
+.st-btn--ghost {
+    border: none;
+    padding: 6px;
+    border-radius: 10px;
+}
+
+.st-btn--ghost:hover {
+    background: var(--bg-elev);
+    color: var(--accent);
+}
+
+.st-btn--danger:hover {
+    color: var(--danger);
+}
+
+/* Футер */
+.st-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 4px 0;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.st-rows-per-page select {
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    color: var(--text);
+    border-radius: 8px;
+    padding: 4px 8px;
+}
+
+/* Пустое состояние */
+.st-empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 36px 0;
+}
+
+.st-lesson-price {
+    color: whitesmoke;
+}
+
+.paid-sub {
+    min-width: 200px;
+}
+
+
+/* Модальное окно подтверждения */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.confirm-modal {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    text-align: center;
+}
+
+.confirm-modal-title {
+    margin: 0 0 15px 0;
+    color: black;
+    background: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.confirm-modal-text {
+    margin: 0 0 25px 0;
+    color: black;
+    background: white;
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+.confirm-modal-actions {
+    color: black;
+    background: white;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.confirm-delete-btn {
+    background: #e74c3c;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 120px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.confirm-delete-btn:hover {
+    background: #c0392b;
+    transform: translateY(-2px);
+}
+
+.confirm-cancel-btn {
+    background: #ecf0f1;
+    color: #2c3e50;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 120px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.confirm-cancel-btn:hover {
+    background: #bdc3c7;
+    transform: translateY(-2px);
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 480px) {
+    .confirm-modal {
+        padding: 20px;
+        margin: 10px;
+    }
+
+    .confirm-modal-actions {
+        flex-direction: column;
+    }
+
+    .confirm-delete-btn,
+    .confirm-cancel-btn {
+        width: 100%;
+        min-width: unset;
+    }
+}

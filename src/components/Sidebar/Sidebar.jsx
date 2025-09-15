@@ -3,11 +3,11 @@ import {useNavigate} from "react-router-dom";
 
 function Sidebar({ onTabClick }) {
     const tabs = [
-        { id: 0, title: "Главная", icon: "🏠", path: "/home" },
-        { id: 1, title: "Студенты", icon: "👨‍🎓" },
-        { id: 2, title: "Календарь", icon: "📅", path: "/calendar" },
-        { id: 3, title: "Финансы", icon: "💰" },
-        { id: 4, title: "Настройки", icon: "⚙️" },
+        { id: 0, title: "Home", icon: "🏠", path: "/" },
+        { id: 1, title: "Students", icon: "👨‍🎓", path: "/students" },
+        { id: 2, title: "Calendar", icon: "📅", path: "/calendar" },
+        { id: 3, title: "Finance", icon: "💰" },
+        { id: 4, title: "Settings", icon: "⚙️" },
     ];
 
     const navigate = useNavigate();
