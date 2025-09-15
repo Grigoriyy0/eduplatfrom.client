@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./StudentTable.css";
 
 
@@ -20,6 +20,20 @@ export default function StudentsTable({
     const [confirmDelete, setConfirmDelete] = useState(false);
 
     const[notification, setNotification] = useState(null);
+
+    // Edit form state
+    const [editFirstName, setEditFirstName] = useState("");
+    const [editLastName, setEditLastName] = useState("");
+    const [editLessonPrice, setEditLessonPrice] = useState(0);
+    const [editEmail, setEditEmail] = useState("");
+    const [editTelegram, setEditTelegram] = useState("");
+    const [editSubscription, setEditSubscription] = useState(0);
+    const [editPaidLessons, setEditPaidLessons] = useState(0);
+
+    // Modal switches
+    const [isEditOpen, setIsEditOpen] = useState(false);
+    const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+    const [paymentAmount, setPaymentAmount] = useState(0);
 
     const totalPages = Math.max(1, Math.ceil(students.length / rowsPerPage));
     const canPrev = page > 0;
@@ -50,6 +64,76 @@ export default function StudentsTable({
             });
 
         setConfirmDelete(false);
+    };
+
+    useEffect(() => {
+        if (selectedStudent) {
+            setEditFirstName(selectedStudent.firstName ?? "");
+            setEditLastName(selectedStudent.lastName ?? "");
+            setEditLessonPrice(selectedStudent.lessonPrice ?? 0);
+            setEditEmail(selectedStudent.email ?? "");
+            setEditTelegram(selectedStudent.telegram ?? "");
+            setEditSubscription(selectedStudent.subscribedLessonsCount ?? 0);
+            setEditPaidLessons(selectedStudent.paidLessonsCount ?? 0);
+        }
+    }, [selectedStudent]);
+
+    const handleUpdateStudent = () => {
+        if (!selectedStudent) return;
+        fetch(`${ApiKey}/students/update/`, {
+            method: "PUT",
+            body: JSON.stringify({
+                studentId: selectedStudent.studentId,
+                firstName: editFirstName,
+                lastName: editLastName,
+                email: editEmail,
+                telegram: editTelegram,
+                paidLessonsCount: editPaidLessons,
+                subscribedLessonsCount: editSubscription,
+                lessonPrice: editLessonPrice,
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then(r => {
+            if (r.ok) {
+                setNotification("Данные ученика обновлены ✅");
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            } else {
+                setNotification("Ошибка при обновлении данных ❌");
+            }
+        }).catch(err => {
+            console.error(err);
+            setNotification("Ошибка при обновлении данных ❌");
+        });
+    };
+
+    const handleAddPayment = () => {
+        if (!selectedStudent) return;
+        fetch(`${ApiKey}/students/add-payment/`, {
+            method: "POST",
+            body: JSON.stringify({
+                studentId: selectedStudent.studentId,
+                amount: paymentAmount,
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then(r => {
+            if (r.ok) {
+                setNotification("Оплата добавлена ✅");
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            } else {
+                setNotification("Ошибка при добавлении оплаты ❌");
+            }
+        }).catch(err => {
+            console.error(err);
+            setNotification("Ошибка при добавлении оплаты ❌");
+        });
     };
 
     return (
@@ -180,7 +264,8 @@ export default function StudentsTable({
             </div>
 
             {/* Модалка */}
-            {selectedStudent && (
+            {/* Info modal (original) */}
+            {selectedStudent && !isEditOpen && !isPaymentOpen && (
                 <div className="modal-overlay" onClick={() => setSelectedStudent(null)}>
                     <div className="modal" onClick={(e) => e.stopPropagation()}>
                         <h3 className="lesson-modal-info">Ученик</h3>
@@ -190,10 +275,94 @@ export default function StudentsTable({
                         <p className="lesson-modal-info">Количество уроков в абонементе <strong className="lesson-modal-info">{selectedStudent.subscribedLessonsCount}</strong></p>
 
                         <div className="modal-actions">
-                            <button className="reschedule-btn" onClick={() => openReschedule(selectedLesson)}>Редактировать</button>
-                            <button className="complete-btn" onClick={() => handleComplete(selectedLesson)}>Добавить оплату</button>
+                            <button className="reschedule-btn" onClick={() => { setIsEditOpen(true); }}>
+                                Редактировать
+                            </button>
+                            <button className="complete-btn" onClick={() => { setIsPaymentOpen(true); }}>
+                                Добавить оплату
+                            </button>
                         </div>
-                        <button className="close-btn" onClick={() => setSelectedStudent(null)}>Закрыть</button>
+                        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '12px', backgroundColor: '#ffffff' }}>
+                            <button className="close-btn" onClick={() => setSelectedStudent(null)}>Закрыть</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Edit modal */}
+            {selectedStudent && isEditOpen && (
+                <div className="modal-overlay" onClick={() => { setIsEditOpen(false); setSelectedStudent(null); }}>
+                    <div className="modal" onClick={(e) => e.stopPropagation()}>
+                        <h3 className="modal-title">Редактировать ученика</h3>
+
+                        <div className="modal-form">
+                            <div className="form-row">
+                                <label>Имя</label>
+                                <input type="text" className="add-stdnt-inpt" value={editFirstName} onChange={(e) => setEditFirstName(e.target.value)} />
+                            </div>
+
+                            <div className="form-row">
+                                <label>Фамилия</label>
+                                <input type="text" className="add-stdnt-inpt" value={editLastName} onChange={(e) => setEditLastName(e.target.value)} />
+                            </div>
+
+                            <div className="form-row">
+                                <label>Цена урока</label>
+                                <input type="text" className="add-stdnt-inpt" value={editLessonPrice} onChange={(e) => setEditLessonPrice(parseInt(e.target.value) || 0)} />
+                            </div>
+
+                            <div className="form-row">
+                                <label>Почта</label>
+                                <input type="text" className="add-stdnt-inpt" value={editEmail} onChange={(e) => setEditEmail(e.target.value)} />
+                            </div>
+
+                            <div className="form-row">
+                                <label>Telegram</label>
+                                <input type="text" className="add-stdnt-inpt" value={editTelegram} onChange={(e) => setEditTelegram(e.target.value)} />
+                            </div>
+
+                            <div className="form-row">
+                                <label>Количество уроков в абонементе</label>
+                                <input type="text" className="add-stdnt-inpt" value={editSubscription} onChange={(e) => setEditSubscription(parseInt(e.target.value) || 0)} />
+                            </div>
+
+                            <div className="form-row">
+                                <label>Количество оплаченных уроков</label>
+                                <input type="text" className="add-stdnt-inpt" value={editPaidLessons} onChange={(e) => setEditPaidLessons(parseInt(e.target.value) || 0)} />
+                            </div>
+                        </div>
+
+                        <div className="modal-actions">
+                            <button className="create-btn" onClick={handleUpdateStudent}>Сохранить</button>
+                            <button className="cancel-btn" onClick={() => { setIsEditOpen(false); setSelectedStudent(null); }}>Отмена</button>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '12px', backgroundColor: '#ffffff' }}>
+                            <button className="close-btn" onClick={() => { setIsEditOpen(false); setSelectedStudent(null); }}>Закрыть</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Payment modal */}
+            {selectedStudent && isPaymentOpen && (
+                <div className="modal-overlay" onClick={() => { setIsPaymentOpen(false); setSelectedStudent(null); }}>
+                    <div className="modal" onClick={(e) => e.stopPropagation()}>
+                        <h3 className="modal-title">Добавить оплату</h3>
+
+                        <div className="modal-form">
+                            <div className="form-row">
+                                <label>Количество оплаченных уроков</label>
+                                <input type="text" className="add-stdnt-inpt" value={paymentAmount} onChange={(e) => setPaymentAmount(parseInt(e.target.value) || 0)} />
+                            </div>
+                        </div>
+
+                        <div className="modal-actions">
+                            <button className="create-btn" onClick={handleAddPayment}>Добавить</button>
+                            <button className="cancel-btn" onClick={() => { setIsPaymentOpen(false); setSelectedStudent(null); }}>Отмена</button>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '12px', backgroundColor: '#ffffff' }}>
+                            <button className="close-btn" onClick={() => { setIsPaymentOpen(false); setSelectedStudent(null); }}>Закрыть</button>
+                        </div>
                     </div>
                 </div>
             )}

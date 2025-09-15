@@ -294,6 +294,10 @@
     transition: all 0.2s;
     min-width: 120px;
     font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .confirm-delete-btn:hover {
@@ -312,6 +316,10 @@
     transition: all 0.2s;
     min-width: 120px;
     font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .confirm-cancel-btn:hover {
