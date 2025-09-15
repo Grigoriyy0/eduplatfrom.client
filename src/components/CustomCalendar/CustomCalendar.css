@@ -81,8 +81,35 @@
 .modal-actions {
     background: white;
     display: flex;
-    gap: 10px;
+    gap: 12px;
     margin-top: 15px;
+    justify-content: space-between;
+}
+
+.modal-actions button {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 10px 16px;
+}
+
+.modal-actions--reschedule {
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.modal-actions--reschedule button {
+    flex: 0 0 150px;
+    max-width: 150px;
+}
+
+/* Remove top margins that push buttons off-center in reschedule modal */
+.modal-actions--reschedule .close-btn,
+.modal-actions--reschedule .reschedule-btn {
+    margin-top: 0;
 }
 
 .delete-btn {

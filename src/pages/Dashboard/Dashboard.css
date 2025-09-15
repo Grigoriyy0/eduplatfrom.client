@@ -1,12 +1,12 @@
 .students {
     grid-area: 2 / 2 / 6 / 7;
-
+    margin-top: 50px;
 }
 
 .Dashboard {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(5, 1fr);
+    grid-template-rows: auto auto auto auto auto;
     grid-column-gap: 0;
     grid-row-gap: 0;
 }
@@ -20,12 +20,17 @@
     grid-area: 1 / 2 / 2 / 7;
 }
 
+.header h1 {
+    margin: 0;
+}
+
 .header-wrapper-title{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     color: white;
+    margin: 16px 0 0 0;
 }
 
 .add-student-btn{
@@ -36,7 +41,7 @@
     height: 40px;
     border-radius: 10px;
     margin-right: 40px;
-    margin-top: 10px;
+    margin-top: 0;
     cursor: pointer;
     transition: 0.5s linear;
 }

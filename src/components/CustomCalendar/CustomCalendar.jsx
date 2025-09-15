@@ -201,7 +201,9 @@ export default function CustomCalendar({ lessons }) {
                             <button className="reschedule-btn" onClick={() => openReschedule(selectedLesson)}>Перенести</button>
                             <button className="complete-btn" onClick={() => handleComplete(selectedLesson)}>Завершить</button>
                         </div>
-                        <button className="close-btn" onClick={() => setSelectedLesson(null)}>Закрыть</button>
+                        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '12px', background: '#ffffff' }}>
+                            <button className="close-btn" onClick={() => setSelectedLesson(null)}>Закрыть</button>
+                        </div>
                     </div>
                 </div>
             )}
@@ -250,7 +252,7 @@ export default function CustomCalendar({ lessons }) {
                             />
                         </label>
 
-                        <div className="modal-actions">
+                        <div className="modal-actions modal-actions--reschedule">
                             <button className="reschedule-btn" onClick={handleReschedule}>
                                 Сохранить
                             </button>
