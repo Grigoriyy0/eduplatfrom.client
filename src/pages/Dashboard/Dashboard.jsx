@@ -9,12 +9,18 @@ function Dashboard() {
 
     const ApiKey = import.meta.env.VITE_API_KEY;
 
+    const token = localStorage.getItem("accessToken");
+
     const [students, setStudents] = useState([]);
     const[addStudent, setAddStudent] = useState(false);
     const[notification, setNotification] = useState(null);
 
     useEffect(() => {
-        fetch(`${ApiKey}/students/all`)
+        fetch(`${ApiKey}/students/all`, {
+            headers : {
+                "Authorization": `Bearer ${token}`
+            }
+        })
             .then(res => res.json())
             .then(data => setStudents(data));
     }, [])

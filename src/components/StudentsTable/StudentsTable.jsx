@@ -39,6 +39,7 @@ export default function StudentsTable({
     const canPrev = page > 0;
     const canNext = page < totalPages - 1;
 
+    const token = localStorage.getItem("accessToken");
 
     const handleDeleteConfirm = () => {
 
@@ -46,6 +47,7 @@ export default function StudentsTable({
             method: "DELETE",
             headers: {
                 Accept: "application/json",
+                'Authorization': `Bearer ${token}`,
             }
         }).then(r => {
             if (r.ok) {
@@ -94,6 +96,7 @@ export default function StudentsTable({
             }),
             headers: {
                 "Content-Type": "application/json",
+                'Authorization': `Bearer ${token}`,
             }
         }).then(r => {
             if (r.ok) {
@@ -120,6 +123,7 @@ export default function StudentsTable({
             }),
             headers: {
                 "Content-Type": "application/json",
+                'Authorization': `Bearer ${token}`,
             }
         }).then(r => {
             if (r.ok) {

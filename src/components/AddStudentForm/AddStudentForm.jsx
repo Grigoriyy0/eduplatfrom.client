@@ -20,6 +20,8 @@ function AddStudentForm({ onCloseAction, onNotificationSet }) {
         onNotificationSet(value);
     };
 
+    const token = localStorage.getItem("accessToken");
+
     const handleAddStudent = () => {
         fetch(`${ApiKey}/students/add/`, {
             method: "POST",
@@ -35,6 +37,7 @@ function AddStudentForm({ onCloseAction, onNotificationSet }) {
             }),
             headers: {
                 "Content-Type": "application/json",
+                'Authorization': `Bearer ${token}`,
             }
         }).then(r => {
             if (r.ok) {

@@ -25,6 +25,8 @@ export default function CustomCalendar({ lessons }) {
     const nextWeek = () => setWeekStart(prev => prev.add(1, "week"));
     const prevWeek = () => setWeekStart(prev => prev.subtract(1, "week"));
 
+    const token = localStorage.getItem("accessToken");
+
     const handleDelete = (lesson) => {
         fetch(`${ApiKey}/lessons/cancel`, {
             method: "DELETE",
@@ -33,6 +35,7 @@ export default function CustomCalendar({ lessons }) {
             }),
             headers: {
                 "Content-Type": "application/json",
+                'Authorization': `Bearer ${token}`,
             }
         })
             .then(r => {
@@ -81,6 +84,7 @@ export default function CustomCalendar({ lessons }) {
             }),
             headers: {
                 "Content-Type": "application/json",
+                'Authorization': `Bearer ${token}`,
             }
         }).then(r => r.json())
             .then(json => console.log(json))
@@ -107,6 +111,7 @@ export default function CustomCalendar({ lessons }) {
             }),
             headers: {
                 "Content-Type": "application/json",
+                'Authorization': `Bearer ${token}`,
             }
         }).then(r => r.json())
             .then(json => console.log(json))
