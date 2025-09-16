@@ -33,7 +33,13 @@ export default function StudentsTable({
     // Modal switches
     const [isEditOpen, setIsEditOpen] = useState(false);
     const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+    const [isTimeSlotOpen, setIsTimeSlotOpen] = useState(false);
     const [paymentAmount, setPaymentAmount] = useState(0);
+
+    // Time slot form state
+    const [timeSlotDay, setTimeSlotDay] = useState("");
+    const [timeSlotStart, setTimeSlotStart] = useState("09:00:00");
+    const [timeSlotEnd, setTimeSlotEnd] = useState("10:00:00");
 
     const totalPages = Math.max(1, Math.ceil(students.length / rowsPerPage));
     const canPrev = page > 0;
@@ -137,6 +143,64 @@ export default function StudentsTable({
         }).catch(err => {
             console.error(err);
             setNotification("Ошибка при добавлении оплаты ❌");
+        });
+    };
+
+    const handleAddTimeSlot = () => {
+        if (!selectedStudent) return;
+
+        if (!timeSlotDay) {
+            setNotification("Выберите день недели ❌");
+            return;
+        }
+
+        const weekdays = [
+            "Понедельник",
+            "Вторник",
+            "Среда",
+            "Четверг",
+            "Пятница",
+            "Суббота",
+            "Воскресенье",
+        ];
+
+        const dayNumber = weekdays.indexOf(timeSlotDay) + 1; // Пн=1 ... Вс=7
+
+        const timePattern = /^\d{2}:\d{2}:\d{2}$/;
+        if (!timePattern.test(timeSlotStart) || !timePattern.test(timeSlotEnd)) {
+            setNotification("Неверный формат времени. Используйте hh:mm:ss ❌");
+            return;
+        }
+
+        if (timeSlotStart >= timeSlotEnd) {
+            setNotification("Время начала должно быть раньше времени конца ❌");
+            return;
+        }
+
+        fetch(`${ApiKey}/time-slots/add/`, {
+            method: "POST",
+            body: JSON.stringify({
+                studentId: selectedStudent.studentId,
+                day: dayNumber,
+                startTime: timeSlotStart,
+                endTime: timeSlotEnd,
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': `Bearer ${token}`,
+            }
+        }).then(r => {
+            if (r.ok) {
+                setNotification("Тайм-слот добавлен ✅");
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            } else {
+                setNotification("Ошибка при добавлении тайм-слота ❌");
+            }
+        }).catch(err => {
+            console.error(err);
+            setNotification("Ошибка при добавлении тайм-слота ❌");
         });
     };
 
@@ -285,6 +349,9 @@ export default function StudentsTable({
                             <button className="complete-btn" onClick={() => { setIsPaymentOpen(true); }}>
                                 Добавить оплату
                             </button>
+                            <button className="complete-btn" onClick={() => { setIsTimeSlotOpen(true); }}>
+                                Add time slot
+                            </button>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '12px', backgroundColor: '#ffffff' }}>
                             <button className="close-btn" onClick={() => setSelectedStudent(null)}>Закрыть</button>
@@ -366,6 +433,51 @@ export default function StudentsTable({
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '12px', backgroundColor: '#ffffff' }}>
                             <button className="close-btn" onClick={() => { setIsPaymentOpen(false); setSelectedStudent(null); }}>Закрыть</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Time slot modal */}
+            {selectedStudent && isTimeSlotOpen && (
+                <div className="modal-overlay" onClick={() => { setIsTimeSlotOpen(false); setSelectedStudent(null); }}>
+                    <div className="modal" onClick={(e) => e.stopPropagation()}>
+                        <h3 className="modal-title">Добавить тайм-слот</h3>
+
+                        <div className="modal-form">
+                            <div className="form-row">
+                                <label>День недели</label>
+                                <select
+                                    className={`add-stdnt-inpt ${!timeSlotDay ? 'select--placeholder' : 'select--value'}`}
+                                    value={timeSlotDay}
+                                    onChange={(e) => setTimeSlotDay(e.target.value)}
+                                >
+                                    <option value="" disabled hidden>Выберите день недели</option>
+                                    <option>Понедельник</option>
+                                    <option>Вторник</option>
+                                    <option>Среда</option>
+                                    <option>Четверг</option>
+                                    <option>Пятница</option>
+                                    <option>Суббота</option>
+                                    <option>Воскресенье</option>
+                                </select>
+                            </div>
+                            <div className="form-row">
+                                <label>Время начала (hh:mm:ss)</label>
+                                <input type="text" className="add-stdnt-inpt" value={timeSlotStart} onChange={(e) => setTimeSlotStart(e.target.value)} />
+                            </div>
+                            <div className="form-row">
+                                <label>Время конца (hh:mm:ss)</label>
+                                <input type="text" className="add-stdnt-inpt" value={timeSlotEnd} onChange={(e) => setTimeSlotEnd(e.target.value)} />
+                            </div>
+                        </div>
+
+                        <div className="modal-actions">
+                            <button className="create-btn" onClick={handleAddTimeSlot}>Добавить</button>
+                            <button className="cancel-btn" onClick={() => { setIsTimeSlotOpen(false); setSelectedStudent(null); }}>Отмена</button>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '12px', backgroundColor: '#ffffff' }}>
+                            <button className="close-btn" onClick={() => { setIsTimeSlotOpen(false); setSelectedStudent(null); }}>Закрыть</button>
                         </div>
                     </div>
                 </div>

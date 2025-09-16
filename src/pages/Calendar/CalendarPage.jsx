@@ -11,9 +11,14 @@ function CalendarPage() {
 
     const ApiKey = import.meta.env.VITE_API_KEY;
     const [lessons, setLessons] = useState([]);
+    const token = localStorage.getItem("accessToken");
 
     useEffect(() => {
-        fetch(`${ApiKey}/lessons/all?criteriaName=month`)
+        fetch(`${ApiKey}/lessons/all?criteriaName=month`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
+        })
             .then(res => res.json())
             .then(data => setLessons(data));
     }, [])

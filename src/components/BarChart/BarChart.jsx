@@ -26,13 +26,8 @@ const BarChart = ({
     const data = activeTab === 'lessons' ? lessonsData : salaryData;
 
     const formatDate = (index) => {
-        const today = new Date();
-        const targetDate = new Date(today);
-        targetDate.setDate(today.getDate() - (6 - index)); // Last 7 days
-        return targetDate.toLocaleDateString('en-US', { 
-            month: 'short', 
-            day: 'numeric' 
-        });
+        const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+        return weekdays[index % 7];
     };
 
     const getMaxValue = () => {

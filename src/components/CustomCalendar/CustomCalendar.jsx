@@ -182,7 +182,7 @@ export default function CustomCalendar({ lessons }) {
                                         }}
                                         onClick={() => setSelectedLesson(l)}
                                     >
-                                        Урок
+                                        {`Урок с ${l.studentName ?? ''}`.trim()}
                                     </div>
                                 );
                             })}

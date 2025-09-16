@@ -219,6 +219,16 @@
     padding: 4px 8px;
 }
 
+/* Select placeholder and value styles for time-slot modal */
+.select--placeholder {
+    color: #ffffff !important;
+}
+
+.select--value {
+    color: #000000 !important;
+    background: #ffffff;
+}
+
 /* Пустое состояние */
 .st-empty {
     text-align: center;
