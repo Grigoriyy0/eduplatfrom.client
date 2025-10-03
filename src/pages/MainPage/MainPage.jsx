@@ -1,6 +1,5 @@
 import Sidebar from "../../components/Sidebar/Sidebar.jsx";
 import "./MainPage.css"
-import CustomChart from "../../components/Chart/CustomChart.jsx";
 import BarChart from "../../components/BarChart/BarChart.jsx";
 import {jwtDecode} from "jwt-decode";
 import {useSalaryData} from "../../hooks/useSalaryData.js";

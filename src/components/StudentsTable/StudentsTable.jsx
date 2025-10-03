@@ -226,7 +226,7 @@ export default function StudentsTable({
                     <tbody>
                     {paged.length === 0 && (
                         <tr>
-                            <td colSpan={6} className="st-empty">Список пуст</td>
+                            <td colSpan={6} className="st-empty">List is empty</td>
                         </tr>
                     )}
 
