@@ -133,16 +133,16 @@ export default function StudentsTable({
             }
         }).then(r => {
             if (r.ok) {
-                setNotification("Оплата добавлена ✅");
+                setNotification("Payment added ✅");
                 setTimeout(() => {
                     window.location.reload();
                 }, 1000);
             } else {
-                setNotification("Ошибка при добавлении оплаты ❌");
+                setNotification("Error during adding payment ❌");
             }
         }).catch(err => {
             console.error(err);
-            setNotification("Ошибка при добавлении оплаты ❌");
+            setNotification("Error during adding payment ❌");
         });
     };
 
@@ -150,18 +150,18 @@ export default function StudentsTable({
         if (!selectedStudent) return;
 
         if (!timeSlotDay) {
-            setNotification("Выберите день недели ❌");
+            setNotification("Choose day of the week ❌");
             return;
         }
 
         const weekdays = [
-            "Понедельник",
-            "Вторник",
-            "Среда",
-            "Четверг",
-            "Пятница",
-            "Суббота",
-            "Воскресенье",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
         ];
 
         const dayNumber = weekdays.indexOf(timeSlotDay) + 1; // Пн=1 ... Вс=7
@@ -191,42 +191,42 @@ export default function StudentsTable({
             }
         }).then(r => {
             if (r.ok) {
-                setNotification("Тайм-слот добавлен ✅");
+                setNotification("Time-slot created ✅");
                 setTimeout(() => {
                     window.location.reload();
                 }, 1000);
             } else {
-                setNotification("Ошибка при добавлении тайм-слота ❌");
+                setNotification("Error during adding time-slot ❌");
             }
         }).catch(err => {
             console.error(err);
-            setNotification("Ошибка при добавлении тайм-слота ❌");
+            setNotification("Error during adding time-slot ❌");
         });
     };
 
     return (
         <div className="st-card">
             <div className="st-header">
-                <h2>Студенты</h2>
+                <h2>Students</h2>
             </div>
 
             <div className="st-table-wrap">
                 <table className="st-table">
                     <thead>
                     <tr>
-                        <th className="st-col-name">Имя</th>
+                        <th className="st-col-name">Name</th>
                         <th>Email</th>
                         <th>Telegram</th>
-                        <th className="paid-sub">Оплачено / Абонемент</th>
-                        <th className="st-col-price">Цена урока</th>
-                        <th className="st-col-actions">Действия</th>
+                        <th className="paid-sub">Paid / Subscribed</th>
+                        <th className="st-col-price">Lesson price</th>
+                        <th className="st-col-actions">Actions</th>
                     </tr>
                     </thead>
 
                     <tbody>
                     {paged.length === 0 && (
                         <tr>
-                            <td colSpan={6} className="st-empty">Список пуст</td>
+                            <td colSpan={6} className="st-empty">List is empty</td>
                         </tr>
                     )}
 
@@ -279,20 +279,20 @@ export default function StudentsTable({
                                 {confirmDelete && (
                                     <div className="modal-overlay" onClick={() => setConfirmDelete(false)}>
                                         <div className="confirm-modal" onClick={(e) => e.stopPropagation()}>
-                                            <h3 className="confirm-modal-title">Вы уверены?</h3>
-                                            <p className="confirm-modal-text">Удалить студента {s.firstName} {s.lastName}?</p>
+                                            <h3 className="confirm-modal-title">Are you sure?</h3>
+                                            <p className="confirm-modal-text">Delete student {s.firstName} {s.lastName}?</p>
                                             <div className="confirm-modal-actions">
                                                 <button
                                                     className="confirm-delete-btn"
                                                     onClick={handleDeleteConfirm}
                                                 >
-                                                    Да, удалить
+                                                    Yes, delete
                                                 </button>
                                                 <button
                                                     className="confirm-cancel-btn"
                                                     onClick={() => setConfirmDelete(false)}
                                                 >
-                                                    Отмена
+                                                    Cancel
                                                 </button>
                                             </div>
                                         </div>
@@ -307,11 +307,11 @@ export default function StudentsTable({
 
             <div className="st-footer">
                 <div className="st-rows-per-page">
-                    По строк на странице:
+                    Rows per page:
                     <select
                         value={rowsPerPage}
                         onChange={(e) => {
-                            const val = Number(e.target.value);
+                            Number(e.target.value);
                             setPage(0);
                             // родитель может контролировать rowsPerPage, но для простоты оставим локально:
                             location.reload(); // убери это, если rowsPerPage будет пропом сверху
@@ -336,25 +336,25 @@ export default function StudentsTable({
             {selectedStudent && !isEditOpen && !isPaymentOpen && (
                 <div className="modal-overlay" onClick={() => setSelectedStudent(null)}>
                     <div className="modal" onClick={(e) => e.stopPropagation()}>
-                        <h3 className="lesson-modal-info">Ученик</h3>
-                        <p className="lesson-modal-info">Имя <strong className="lesson-modal-info">{selectedStudent.firstName} {selectedStudent.lastName}</strong></p>
-                        <p className="lesson-modal-info">Цена урока <strong className="lesson-modal-info">{selectedStudent.lessonPrice}</strong></p>
-                        <p className="lesson-modal-info">Почта <strong className="lesson-modal-info">{selectedStudent.email}</strong></p>
-                        <p className="lesson-modal-info">Количество уроков в абонементе <strong className="lesson-modal-info">{selectedStudent.subscribedLessonsCount}</strong></p>
+                        <h3 className="lesson-modal-info">Student</h3>
+                        <p className="lesson-modal-info">Name <strong className="lesson-modal-info">{selectedStudent.firstName} {selectedStudent.lastName}</strong></p>
+                        <p className="lesson-modal-info">Lesson price<strong className="lesson-modal-info">{selectedStudent.lessonPrice}</strong></p>
+                        <p className="lesson-modal-info">Email <strong className="lesson-modal-info">{selectedStudent.email}</strong></p>
+                        <p className="lesson-modal-info">Subscribed lessons count <strong className="lesson-modal-info">{selectedStudent.subscribedLessonsCount}</strong></p>
 
                         <div className="modal-actions">
                             <button className="reschedule-btn" onClick={() => { setIsEditOpen(true); }}>
-                                Редактировать
+                                Edit
                             </button>
                             <button className="complete-btn" onClick={() => { setIsPaymentOpen(true); }}>
-                                Добавить оплату
+                                Add payment
                             </button>
                             <button className="complete-btn" onClick={() => { setIsTimeSlotOpen(true); }}>
                                 Add time slot
                             </button>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '12px', backgroundColor: '#ffffff' }}>
-                            <button className="close-btn" onClick={() => setSelectedStudent(null)}>Закрыть</button>
+                            <button className="close-btn" onClick={() => setSelectedStudent(null)}>Close</button>
                         </div>
                     </div>
                 </div>
@@ -364,26 +364,26 @@ export default function StudentsTable({
             {selectedStudent && isEditOpen && (
                 <div className="modal-overlay" onClick={() => { setIsEditOpen(false); setSelectedStudent(null); }}>
                     <div className="modal" onClick={(e) => e.stopPropagation()}>
-                        <h3 className="modal-title">Редактировать ученика</h3>
+                        <h3 className="modal-title">Edit student</h3>
 
                         <div className="modal-form">
                             <div className="form-row">
-                                <label>Имя</label>
+                                <label>Name</label>
                                 <input type="text" className="add-stdnt-inpt" value={editFirstName} onChange={(e) => setEditFirstName(e.target.value)} />
                             </div>
 
                             <div className="form-row">
-                                <label>Фамилия</label>
+                                <label>Surname</label>
                                 <input type="text" className="add-stdnt-inpt" value={editLastName} onChange={(e) => setEditLastName(e.target.value)} />
                             </div>
 
                             <div className="form-row">
-                                <label>Цена урока</label>
+                                <label>Lesson price</label>
                                 <input type="text" className="add-stdnt-inpt" value={editLessonPrice} onChange={(e) => setEditLessonPrice(parseInt(e.target.value) || 0)} />
                             </div>
 
                             <div className="form-row">
-                                <label>Почта</label>
+                                <label>Email</label>
                                 <input type="text" className="add-stdnt-inpt" value={editEmail} onChange={(e) => setEditEmail(e.target.value)} />
                             </div>
 
@@ -393,22 +393,22 @@ export default function StudentsTable({
                             </div>
 
                             <div className="form-row">
-                                <label>Количество уроков в абонементе</label>
+                                <label>Subscribed lessons count</label>
                                 <input type="text" className="add-stdnt-inpt" value={editSubscription} onChange={(e) => setEditSubscription(parseInt(e.target.value) || 0)} />
                             </div>
 
                             <div className="form-row">
-                                <label>Количество оплаченных уроков</label>
+                                <label>Paid lessons count</label>
                                 <input type="text" className="add-stdnt-inpt" value={editPaidLessons} onChange={(e) => setEditPaidLessons(parseInt(e.target.value) || 0)} />
                             </div>
                         </div>
 
                         <div className="modal-actions">
-                            <button className="create-btn" onClick={handleUpdateStudent}>Сохранить</button>
-                            <button className="cancel-btn" onClick={() => { setIsEditOpen(false); setSelectedStudent(null); }}>Отмена</button>
+                            <button className="create-btn" onClick={handleUpdateStudent}>Save</button>
+                            <button className="cancel-btn" onClick={() => { setIsEditOpen(false); setSelectedStudent(null); }}>Cancel</button>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '12px', backgroundColor: '#ffffff' }}>
-                            <button className="close-btn" onClick={() => { setIsEditOpen(false); setSelectedStudent(null); }}>Закрыть</button>
+                            <button className="close-btn" onClick={() => { setIsEditOpen(false); setSelectedStudent(null); }}>Close</button>
                         </div>
                     </div>
                 </div>
@@ -418,21 +418,21 @@ export default function StudentsTable({
             {selectedStudent && isPaymentOpen && (
                 <div className="modal-overlay" onClick={() => { setIsPaymentOpen(false); setSelectedStudent(null); }}>
                     <div className="modal" onClick={(e) => e.stopPropagation()}>
-                        <h3 className="modal-title">Добавить оплату</h3>
+                        <h3 className="modal-title">Add payment</h3>
 
                         <div className="modal-form">
                             <div className="form-row">
-                                <label>Количество оплаченных уроков</label>
+                                <label>Paid lessons amount</label>
                                 <input type="text" className="add-stdnt-inpt" value={paymentAmount} onChange={(e) => setPaymentAmount(parseInt(e.target.value) || 0)} />
                             </div>
                         </div>
 
                         <div className="modal-actions">
-                            <button className="create-btn" onClick={handleAddPayment}>Добавить</button>
-                            <button className="cancel-btn" onClick={() => { setIsPaymentOpen(false); setSelectedStudent(null); }}>Отмена</button>
+                            <button className="create-btn" onClick={handleAddPayment}>Add</button>
+                            <button className="cancel-btn" onClick={() => { setIsPaymentOpen(false); setSelectedStudent(null); }}>Cancel</button>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '12px', backgroundColor: '#ffffff' }}>
-                            <button className="close-btn" onClick={() => { setIsPaymentOpen(false); setSelectedStudent(null); }}>Закрыть</button>
+                            <button className="close-btn" onClick={() => { setIsPaymentOpen(false); setSelectedStudent(null); }}>Close</button>
                         </div>
                     </div>
                 </div>
@@ -442,42 +442,42 @@ export default function StudentsTable({
             {selectedStudent && isTimeSlotOpen && (
                 <div className="modal-overlay" onClick={() => { setIsTimeSlotOpen(false); setSelectedStudent(null); }}>
                     <div className="modal" onClick={(e) => e.stopPropagation()}>
-                        <h3 className="modal-title">Добавить тайм-слот</h3>
+                        <h3 className="modal-title">Add time-slot</h3>
 
                         <div className="modal-form">
                             <div className="form-row">
-                                <label>День недели</label>
+                                <label>Week day</label>
                                 <select
                                     className={`add-stdnt-inpt ${!timeSlotDay ? 'select--placeholder' : 'select--value'}`}
                                     value={timeSlotDay}
                                     onChange={(e) => setTimeSlotDay(e.target.value)}
                                 >
                                     <option value="" disabled hidden>Выберите день недели</option>
-                                    <option>Понедельник</option>
-                                    <option>Вторник</option>
-                                    <option>Среда</option>
-                                    <option>Четверг</option>
-                                    <option>Пятница</option>
-                                    <option>Суббота</option>
-                                    <option>Воскресенье</option>
+                                    <option>Monday</option>
+                                    <option>Tuesday</option>
+                                    <option>Wednesday</option>
+                                    <option>Thursday</option>
+                                    <option>Friday</option>
+                                    <option>Saturday</option>
+                                    <option>Sunday</option>
                                 </select>
                             </div>
                             <div className="form-row">
-                                <label>Время начала (hh:mm:ss)</label>
+                                <label>Start time (hh:mm:ss)</label>
                                 <input type="text" className="add-stdnt-inpt" value={timeSlotStart} onChange={(e) => setTimeSlotStart(e.target.value)} />
                             </div>
                             <div className="form-row">
-                                <label>Время конца (hh:mm:ss)</label>
+                                <label>End time (hh:mm:ss)</label>
                                 <input type="text" className="add-stdnt-inpt" value={timeSlotEnd} onChange={(e) => setTimeSlotEnd(e.target.value)} />
                             </div>
                         </div>
 
                         <div className="modal-actions">
-                            <button className="create-btn" onClick={handleAddTimeSlot}>Добавить</button>
-                            <button className="cancel-btn" onClick={() => { setIsTimeSlotOpen(false); setSelectedStudent(null); }}>Отмена</button>
+                            <button className="create-btn" onClick={handleAddTimeSlot}>Add</button>
+                            <button className="cancel-btn" onClick={() => { setIsTimeSlotOpen(false); setSelectedStudent(null); }}>Cancel</button>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '12px', backgroundColor: '#ffffff' }}>
-                            <button className="close-btn" onClick={() => { setIsTimeSlotOpen(false); setSelectedStudent(null); }}>Закрыть</button>
+                            <button className="close-btn" onClick={() => { setIsTimeSlotOpen(false); setSelectedStudent(null); }}>Create</button>
                         </div>
                     </div>
                 </div>

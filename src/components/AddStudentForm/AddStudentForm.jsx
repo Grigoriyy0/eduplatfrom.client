@@ -41,44 +41,44 @@ function AddStudentForm({ onCloseAction, onNotificationSet }) {
             }
         }).then(r => {
             if (r.ok) {
-                handleSetNotification("Студент успешно добавлен ✅");
+                handleSetNotification("Student created ✅");
                 // через 1 сек обновим страницу
                 setTimeout(() => {
                     window.location.reload();
                 }, 1000);
             } else {
-                handleSetNotification("Ошибка при создании студента ❌");
+                handleSetNotification("Error during creating student ❌");
             }
         })
             .catch(err => {
                 console.error(err);
-                handleSetNotification("Ошибка при создании студента ❌");
+                handleSetNotification("Error during creating student ❌");
             });
     }
 
     return (
         <div className="modal-overlay" onClick={handleClose}>
             <div className="modal" onClick={(e) => e.stopPropagation()}>
-                <h3 className="modal-title">Добавить ученика</h3>
+                <h3 className="modal-title">Create student</h3>
 
                 <div className="modal-form">
                     <div className="form-row">
-                        <label>Имя</label>
+                        <label>First name</label>
                         <input type="text" className="add-stdnt-inpt" onChange={(e) => setFirstName(e.target.value)} />
                     </div>
 
                     <div className="form-row">
-                        <label>Фамилия</label>
+                        <label>Last name</label>
                         <input type="text" className="add-stdnt-inpt" onChange={(e) => setLastName(e.target.value)} />
                     </div>
 
                     <div className="form-row">
-                        <label>Цена урока</label>
+                        <label>Lesson price</label>
                         <input type="text" className="add-stdnt-inpt" onChange={(e) => setLessonPrice(parseInt(e.target.value))}/>
                     </div>
 
                     <div className="form-row">
-                        <label>Почта</label>
+                        <label>Email</label>
                         <input type="text" className="add-stdnt-inpt" onChange={(e) => setEmail(e.target.value)}/>
                     </div>
 
@@ -88,19 +88,19 @@ function AddStudentForm({ onCloseAction, onNotificationSet }) {
                     </div>
 
                     <div className="form-row">
-                        <label>Количество уроков в абонементе</label>
+                        <label>Subscribed lessons count</label>
                         <input type="text" className="add-stdnt-inpt" onChange={(e) => setSubscription(parseInt(e.target.value))}/>
                     </div>
 
                     <div className="form-row">
-                        <label>Количество оплаченных уроков</label>
+                        <label>Paid lessons count</label>
                         <input type="text" className="add-stdnt-inpt" onChange={(e) => setPaidLessons(parseInt(e.target.value))}/>
                     </div>
                 </div>
 
                 <div className="modal-actions">
-                    <button className="create-btn" onClick={handleAddStudent}>Добавить</button>
-                    <button className="cancel-btn" onClick={handleClose}>Отмена</button>
+                    <button className="create-btn" onClick={handleAddStudent}>Create</button>
+                    <button className="cancel-btn" onClick={handleClose}>Cancel</button>
                 </div>
             </div>
         </div>

@@ -1,4 +1,3 @@
-import StudentCard from "../../components/StudentCard/StudentCard.jsx";
 import React, {useEffect, useState} from "react";
 import "./Dashboard.css"
 import Sidebar from "../../components/Sidebar/Sidebar.jsx";

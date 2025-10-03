@@ -38,7 +38,7 @@ const BarChart = ({
     const renderBar = (value, index) => {
         const maxValue = getMaxValue();
         const height = maxValue > 0 ? (value / maxValue) * 100 : 0;
-        const unit = activeTab === 'lessons' ? 'lessons' : 'HKD';
+        const unit = activeTab === 'lessons' ? 'lessons' : 'RUB';
 
         return (
             <div key={index} className="bar-item">
