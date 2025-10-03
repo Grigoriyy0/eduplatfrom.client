@@ -46,12 +46,12 @@ export default function CustomCalendar({ lessons }) {
                         window.location.reload();
                     }, 1000);
                 } else {
-                    setNotification("Ошибка при удалении ❌");
+                    setNotification("Error during deleting ❌");
                 }
             })
             .catch(err => {
                 console.error(err);
-                setNotification("Ошибка при удалении ❌");
+                setNotification("Error during deleting ❌");
             });
 
         setSelectedLesson(null);
@@ -68,7 +68,7 @@ export default function CustomCalendar({ lessons }) {
     };
 
     const handleReschedule = () => {
-        console.log("Переносим:", selectedLesson.id, {
+        console.log("Rescheduling:", selectedLesson.id, {
             newDate,
             newStart,
             newEnd
@@ -89,7 +89,7 @@ export default function CustomCalendar({ lessons }) {
         }).then(r => r.json())
             .then(json => console.log(json))
             .then(() => {
-                setNotification("Урок был перенесен ✅");
+                setNotification("Lesson is rescheduled ✅");
                 setTimeout(() => {
                     window.location.reload();
                 }, 1000);
@@ -116,7 +116,7 @@ export default function CustomCalendar({ lessons }) {
         }).then(r => r.json())
             .then(json => console.log(json))
             .then(() => {
-                setNotification("Урок отмечен пройденым ✅");
+                setNotification("Lesson marked as finished ✅");
                     setTimeout(() => {
                         window.location.reload();
                     }, 1000);
@@ -182,7 +182,7 @@ export default function CustomCalendar({ lessons }) {
                                         }}
                                         onClick={() => setSelectedLesson(l)}
                                     >
-                                        {`Урок с ${l.studentName ?? ''}`.trim()}
+                                        {`Lesson with ${l.studentName ?? ''}`.trim()}
                                     </div>
                                 );
                             })}
@@ -196,18 +196,18 @@ export default function CustomCalendar({ lessons }) {
             {selectedLesson && (
                 <div className="modal-overlay" onClick={() => setSelectedLesson(null)}>
                     <div className="modal" onClick={(e) => e.stopPropagation()}>
-                        <h3 className="lesson-modal-info">Урок</h3>
+                        <h3 className="lesson-modal-info">Lesson</h3>
                         <p className="lesson-modal-info">{selectedLesson.date}</p>
                         <p className="lesson-modal-info"> {selectedLesson.startTime} - {selectedLesson.endTime}</p>
-                        <p className="lesson-modal-info">Ученик {selectedLesson.studentName}</p>
-                        <p className="lesson-modal-info">Урок был? {selectedLesson.isCompleted === true ? "Да" : "Нет"}</p>
+                        <p className="lesson-modal-info">Student {selectedLesson.studentName}</p>
+                        <p className="lesson-modal-info">Completed? {selectedLesson.isCompleted === true ? "Yes" : "No"}</p>
                         <div className="modal-actions">
-                            <button className="delete-btn" onClick={() => handleDelete(selectedLesson)}>Удалить</button>
-                            <button className="reschedule-btn" onClick={() => openReschedule(selectedLesson)}>Перенести</button>
-                            <button className="complete-btn" onClick={() => handleComplete(selectedLesson)}>Завершить</button>
+                            <button className="delete-btn" onClick={() => handleDelete(selectedLesson)}>Delete</button>
+                            <button className="reschedule-btn" onClick={() => openReschedule(selectedLesson)}>Reschedule</button>
+                            <button className="complete-btn" onClick={() => handleComplete(selectedLesson)}>Mark finished</button>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '12px', background: '#ffffff' }}>
-                            <button className="close-btn" onClick={() => setSelectedLesson(null)}>Закрыть</button>
+                            <button className="close-btn" onClick={() => setSelectedLesson(null)}>Close</button>
                         </div>
                     </div>
                 </div>
@@ -224,10 +224,10 @@ export default function CustomCalendar({ lessons }) {
             {selectedLesson && rescheduleMode && (
                 <div className="modal-overlay" onClick={() => setRescheduleMode(false)}>
                     <div className="modal" onClick={(e) => e.stopPropagation()}>
-                        <h3 className="lesson-modal-info">Перенести урок {selectedLesson.id}</h3>
+                        <h3 className="lesson-modal-info">Reschedule lesson {selectedLesson.id}</h3>
 
                         <label className="lesson-modal-info">
-                            Дата:
+                            Date:
                             <input
                                 className="lesson-modal-info"
                                 type="date"
@@ -237,7 +237,7 @@ export default function CustomCalendar({ lessons }) {
                         </label>
 
                         <label className="lesson-modal-info">
-                            Время начала:
+                            Start time:
                             <input
                                 className="lesson-modal-info"
                                 type="time"
@@ -248,7 +248,7 @@ export default function CustomCalendar({ lessons }) {
                         </label>
 
                         <label className="lesson-modal-info">
-                            Время конца:
+                            End time:
                             <input className="lesson-modal-info"
                                 type="time"
                                 step="1"
@@ -259,10 +259,10 @@ export default function CustomCalendar({ lessons }) {
 
                         <div className="modal-actions modal-actions--reschedule">
                             <button className="reschedule-btn" onClick={handleReschedule}>
-                                Сохранить
+                                Save
                             </button>
                             <button className="close-btn" onClick={() => setRescheduleMode(false)}>
-                                Отмена
+                                Cancel
                             </button>
                         </div>
                     </div>
