@@ -238,3 +238,160 @@
         font-size: 14px;
     }
 }
+
+/* Модалка подтверждения удаления */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.confirmation-modal {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.modal-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    background: white;
+}
+
+.modal-title {
+    color: black;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.modal-message {
+    color: black;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    background-color: white;
+}
+
+.slot-info {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+.slot-info div {
+    margin-bottom: 8px;
+    color: black;
+    background: white;
+}
+
+.slot-info div:last-child {
+    margin-bottom: 0;
+}
+
+.slot-info strong {
+    color: black;
+    background-color: white;
+
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.slot-info-day{
+    background: white;
+}
+
+.cancel-btn, .confirm-delete-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 100px;
+}
+
+.cancel-btn {
+    background: lightgray;
+    color: black;
+}
+
+.cancel-btn:hover {
+    background: white;
+    transform: translateY(-1px);
+}
+
+.confirm-delete-btn {
+    background: #ef4444;
+    color: white;
+}
+
+.confirm-delete-btn:hover {
+    background: #dc2626;
+    transform: translateY(-1px);
+}
+
+.cancel-btn:active, .confirm-delete-btn:active {
+    transform: translateY(0);
+}
+
+/* Уведомления */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #10b981;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1001;
+    animation: slideInRight 0.3s ease;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Адаптивность для модалки */
+@media (max-width: 480px) {
+    .confirmation-modal {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+    }
+
+    .cancel-btn, .confirm-delete-btn {
+        min-width: auto;
+        width: 100%;
+    }
+}
