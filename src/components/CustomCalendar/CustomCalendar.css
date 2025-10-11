@@ -18,6 +18,38 @@
     display: grid;
     grid-template-columns: 60px repeat(7, 1fr);
     position: relative;
+    max-height: calc(16 * 60px); /* Ограничиваем высоту по количеству часов */
+    overflow-y: auto;
+}
+
+/* Заголовки дней */
+.time-column-header {
+    background: #0B1739;
+    border-bottom: 1px solid #2a3a55;
+    height: 50px;
+}
+
+.day-header {
+    background: #0B1739;
+    border-bottom: 1px solid #2a3a55;
+    border-left: 1px solid #2a3a55;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+}
+
+.day-name {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.day-date {
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .time-column .time-cell {
@@ -38,6 +70,7 @@
 .day-column {
     position: relative;
     border-left: 1px solid #2a3a55;
+    min-height: calc(16 * 60px); /* Минимальная высота для 16 часов */
 }
 
 .lesson {
@@ -172,6 +205,3 @@
 @keyframes fadeOut {
     to { opacity: 0; transform: translateX(150%); }
 }
-
-
-

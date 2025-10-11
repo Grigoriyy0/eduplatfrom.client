@@ -7,6 +7,9 @@ dayjs.extend(customParseFormat);
 
 const PIXELS_PER_HOUR = 60; // масштаб — 1 час = 60px
 const PIXELS_PER_MINUTE = PIXELS_PER_HOUR / 60;
+const START_HOUR = 8; // начинаем с 8:00
+const END_HOUR = 24; // заканчиваем в 24:00
+const HOURS_TO_DISPLAY = END_HOUR - START_HOUR; // количество отображаемых часов
 
 export default function CustomCalendar({ lessons }) {
 
@@ -117,11 +120,11 @@ export default function CustomCalendar({ lessons }) {
             .then(json => console.log(json))
             .then(() => {
                 setNotification("Lesson marked as finished ✅");
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1000);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
             });
-         setSelectedLesson(null);
+        setSelectedLesson(null);
     };
 
 
@@ -136,15 +139,26 @@ export default function CustomCalendar({ lessons }) {
             </div>
 
             <div className="calendar-grid">
+                {/* Пустая ячейка для выравнивания с колонкой времени */}
+                <div className="time-column-header"></div>
+
+                {/* Заголовки дней с датами */}
+                {days.map(day => (
+                    <div key={day.format("YYYY-MM-DD")} className="day-header">
+                        <div className="day-name">{day.format("ddd")}</div>
+                        <div className="day-date">{day.format("DD.MM")}</div>
+                    </div>
+                ))}
+
                 {/* Колонка с часами */}
                 <div className="time-column">
-                    {Array.from({ length: 24 }, (_, i) => (
+                    {Array.from({ length: HOURS_TO_DISPLAY }, (_, i) => (
                         <div
                             key={i}
                             className="time-cell"
                             style={{ height: `${PIXELS_PER_HOUR}px` }}
                         >
-                            {`${i}:00`}
+                            {`${i + START_HOUR}:00`}
                         </div>
                     ))}
                 </div>
@@ -152,7 +166,7 @@ export default function CustomCalendar({ lessons }) {
                 {/* Колонки дней */}
                 {days.map(day => (
                     <div key={day.format("YYYY-MM-DD")} className="day-column">
-                        {Array.from({ length: 24 }, (_, i) => (
+                        {Array.from({ length: HOURS_TO_DISPLAY }, (_, i) => (
                             <div
                                 key={i}
                                 className="hour-cell"
@@ -169,7 +183,9 @@ export default function CustomCalendar({ lessons }) {
                                 const start = dayjs(`${l.date} ${l.startTime}`, "YYYY-MM-DD HH:mm:ss");
                                 const end = dayjs(`${l.date} ${l.endTime}`, "YYYY-MM-DD HH:mm:ss");
 
-                                const minutesFromTop = start.diff(start.startOf("day"), "minutes");
+                                // Вычисляем позицию относительно начала дня (8:00)
+                                const startOfDisplayDay = start.startOf("day").add(START_HOUR, "hour");
+                                const minutesFromTop = start.diff(startOfDisplayDay, "minutes");
                                 const lessonDuration = end.diff(start, "minutes");
 
                                 return (
@@ -187,8 +203,6 @@ export default function CustomCalendar({ lessons }) {
                                 );
                             })}
                     </div>
-
-
                 ))}
             </div>
 
@@ -250,10 +264,10 @@ export default function CustomCalendar({ lessons }) {
                         <label className="lesson-modal-info">
                             End time:
                             <input className="lesson-modal-info"
-                                type="time"
-                                step="1"
-                                value={newEnd}
-                                onChange={e => setNewEnd(e.target.value)}
+                                   type="time"
+                                   step="1"
+                                   value={newEnd}
+                                   onChange={e => setNewEnd(e.target.value)}
                             />
                         </label>
 
