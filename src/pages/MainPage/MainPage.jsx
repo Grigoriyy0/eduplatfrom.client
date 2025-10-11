@@ -10,7 +10,7 @@ function MainPage() {
     const ApiKey = import.meta.env.VITE_API_KEY;
     const token = localStorage.getItem("accessToken");
     const decodedToken = jwtDecode(token);
-    const {name, email, id} = decodedToken;
+    const {name} = decodedToken;
 
     // Use custom hooks for data fetching
     const { salaryData, loading: salaryLoading, error: salaryError } = useSalaryData(ApiKey, token);

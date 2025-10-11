@@ -1,0 +1,240 @@
+.time-slots-page {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    grid-column-gap: 0;
+    grid-row-gap: 0;
+    height: 100vh;
+}
+
+.sidebar-wrapper {
+    grid-area: 1 / 1 / 11 / 2;
+}
+
+.main-content {
+    grid-area: 1 / 2 / 11 / 7;
+    color: #0B1739;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.time-slots-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.time-slots-title {
+    color: white;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.time-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 10px 0;
+    flex: 1;
+    align-content: flex-start;
+}
+
+.time-slot-card {
+    background: #0B1739;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+}
+
+.time-slot-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-color: #3b82f6;
+}
+
+.time-slot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    background: #0B1739;
+}
+
+.slot-number {
+    background: #3b82f6;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.slot-day {
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    background: #0B1739;
+}
+
+.time-slot-body {
+    background: #0B1739;
+    flex: 1;
+    margin-bottom: 16px;
+}
+
+.time-range {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    background: #0B1739;
+    margin-bottom: 8px;
+}
+
+.time-icon {
+    font-size: 16px;
+}
+
+.duration {
+    color: lightgray;
+    font-size: 14px;
+    padding-left: 24px;
+    background: #0B1739;
+}
+
+.time-slot-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    background: #0B1739;
+}
+
+.student-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #059669;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.student-icon {
+    font-size: 12px;
+}
+
+.available-badge {
+    background: #d1fae5;
+    color: #065f46;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.loading, .error {
+    text-align: center;
+    padding: 60px 20px;
+    font-size: 18px;
+    color: #64748b;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error {
+    color: #dc2626;
+}
+
+.no-slots {
+    text-align: center;
+    padding: 80px 20px;
+    color: #64748b;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.no-slots-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+
+.no-slots h3 {
+    color: #1e293b;
+    margin-bottom: 8px;
+    font-size: 24px;
+}
+
+.no-slots p {
+    font-size: 16px;
+}
+
+.slot-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    background: #0B1739;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: #0B1739;
+}
+
+/* Адаптивность внутри основной сетки */
+@media (max-width: 1200px) {
+    .time-slots-grid {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .time-slots-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 16px;
+    }
+
+    .time-slots-title {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .time-slot-card {
+        padding: 16px;
+    }
+
+    .time-range {
+        font-size: 16px;
+    }
+
+    .slot-day {
+        font-size: 14px;
+    }
+}
