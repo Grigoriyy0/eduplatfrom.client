@@ -6,7 +6,7 @@ function Sidebar({ onTabClick }) {
         { id: 0, title: "Home", icon: "🏠", path: "/" },
         { id: 1, title: "Students", icon: "👨‍🎓", path: "/students" },
         { id: 2, title: "Calendar", icon: "📅", path: "/calendar" },
-        { id: 3, title: "Finance", icon: "💰" },
+        { id: 3, title: "Time slots", icon: "⏱️", path: "/time-slots" },
         { id: 4, title: "Settings", icon: "⚙️" },
     ];
 
