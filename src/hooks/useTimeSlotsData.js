@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 
 /**
- * Custom hook for fetching salary analytics data
+ * Custom hook for fetching time slots data
  * @param {string} apiKey - Base API URL
  * @param {string} token - Authorization token
- * @returns {Object} - { salaryData, loading, error }
+ * @returns {Object} - { timeSlotsData, loading, error }
  */
 export const useTimeSlotsData = (apiKey, token) => {
     const [timeSlotsData, setTimeSlotsData] = useState(null);
