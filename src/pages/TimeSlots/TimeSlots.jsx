@@ -9,6 +9,7 @@ function TimeSlots() {
     const { timeSlotsData, loading: timeSlotsLoading, error: timeSlotsError } = useTimeSlotsData(ApiKey, token);
     const [notification, setNotification] = useState(null);
     const [deleteModal, setDeleteModal] = useState({ isOpen: false, slot: null });
+    const [editModal, setEditModal] = useState({ isOpen: false, slot: null });
 
     // Функция для преобразования дня недели из числа в текст
     const getDayName = (dayNumber) => {
@@ -20,7 +21,6 @@ function TimeSlots() {
             'Thursday',
             'Friday',
             'Saturday',
-            'Sunday',
         ];
         return days[dayNumber] || `Day ${dayNumber}`;
     };
@@ -46,6 +46,44 @@ function TimeSlots() {
         if (deleteModal.slot) {
             handleDelete(deleteModal.slot.id);
             closeDeleteModal();
+        }
+    };
+
+    // Открытие модалки редактирования
+    const openEditModal = (slot, e) => {
+        e.stopPropagation();
+        setEditModal({
+            isOpen: true,
+            slot: {
+                ...slot,
+                // Преобразуем время в формат для input type="time"
+                startTime: formatTime(slot.startTime),
+                endTime: formatTime(slot.endTime)
+            }
+        });
+    };
+
+    // Закрытие модалки редактирования
+    const closeEditModal = () => {
+        setEditModal({ isOpen: false, slot: null });
+    };
+
+    // Обработчик изменения полей в модалке редактирования
+    const handleEditChange = (field, value) => {
+        setEditModal(prev => ({
+            ...prev,
+            slot: {
+                ...prev.slot,
+                [field]: value
+            }
+        }));
+    };
+
+    // Сохранение изменений
+    const saveChanges = () => {
+        if (editModal.slot) {
+            handleEdit(editModal.slot);
+            closeEditModal();
         }
     };
 
@@ -75,10 +113,37 @@ function TimeSlots() {
         );
     }
 
-    function handleEdit(slot, e) {
-        e.stopPropagation();
-        // Здесь будет логика редактирования
-        console.log('Edit slot:', slot);
+    function handleEdit(updatedSlot) {
+        // Добавляем секунды к времени для корректного формата API
+        const slotData = {
+            ...updatedSlot,
+            timeSlotId : updatedSlot.id,
+            startTime: updatedSlot.startTime,
+            endTime: updatedSlot.endTime,
+            day: updatedSlot.day,
+        };
+
+        fetch(`${ApiKey}/time-slots/update/`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify(slotData)
+        }).then(r => {
+            if (r.ok) {
+                setNotification("Time slot updated ✅");
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            } else {
+                setNotification("Error during updating time slot ❌");
+            }
+        })
+            .catch(err => {
+                console.error(err);
+                setNotification("Error during updating time slot ❌");
+            });
     }
 
     function handleDelete(id) {
@@ -91,7 +156,6 @@ function TimeSlots() {
         }).then(r => {
             if (r.ok) {
                 setNotification("Time slot deleted ✅");
-                // через 1 сек обновим страницу
                 setTimeout(() => {
                     window.location.reload();
                 }, 1000);
@@ -147,7 +211,7 @@ function TimeSlots() {
                                         <div className="slot-actions">
                                             <button
                                                 className="action-btn edit-btn"
-                                                onClick={(e) => handleEdit(slot, e)}
+                                                onClick={(e) => openEditModal(slot, e)}
                                                 title="Edit"
                                             >
                                                 ✏️
@@ -185,8 +249,8 @@ function TimeSlots() {
                         </p>
                         {deleteModal.slot && (
                             <div className="slot-info">
-                                <div className="slot-info-day"><strong>Day:</strong> {getDayName(deleteModal.slot.day)}</div>
-                                <div className="slot-info-day"><strong>Time:</strong> {formatTime(deleteModal.slot.startTime)} - {formatTime(deleteModal.slot.endTime)}</div>
+                                <div><strong>Day:</strong> {getDayName(deleteModal.slot.day)}</div>
+                                <div><strong>Time:</strong> {formatTime(deleteModal.slot.startTime)} - {formatTime(deleteModal.slot.endTime)}</div>
                             </div>
                         )}
                         <div className="modal-actions">
@@ -201,6 +265,77 @@ function TimeSlots() {
                                 onClick={confirmDelete}
                             >
                                 Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Модалка редактирования */}
+            {editModal.isOpen && editModal.slot && (
+                <div className="modal-overlay" onClick={closeEditModal}>
+                    <div className="edit-modal" onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-icon">✏️</div>
+                        <h3 className="modal-title">Edit Time Slot</h3>
+
+                        <div className="form-group">
+                            <label className="form-label">Day of Week</label>
+                            <select
+                                className="form-select"
+                                value={editModal.slot.day}
+                                onChange={(e) => handleEditChange('day', parseInt(e.target.value))}
+                            >
+                                <option value={7}>Sunday</option>
+                                <option value={1}>Monday</option>
+                                <option value={2}>Tuesday</option>
+                                <option value={3}>Wednesday</option>
+                                <option value={4}>Thursday</option>
+                                <option value={5}>Friday</option>
+                                <option value={6}>Saturday</option>
+                            </select>
+                        </div>
+
+                        <div className="form-group">
+                            <label className="form-label">Start Time</label>
+                            <input
+                                type="time"
+                                className="form-input"
+                                value={editModal.slot.startTime}
+                                onChange={(e) => handleEditChange('startTime', e.target.value)}
+                                step="1"
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label className="form-label">End Time</label>
+                            <input
+                                type="time"
+                                className="form-input"
+                                value={editModal.slot.endTime}
+                                onChange={(e) => handleEditChange('endTime', e.target.value)}
+                                step="1"
+                            />
+                        </div>
+
+                        <div className="current-info">
+                            <h4>Current Information:</h4>
+                            <div><strong>Day:</strong> {getDayName(editModal.slot.day)}</div>
+                            <div><strong>Time:</strong> {formatTime(editModal.slot.startTime)} - {formatTime(editModal.slot.endTime)}</div>
+                            <div><strong>Duration:</strong> {formatTime(editModal.slot.duration)}</div>
+                        </div>
+
+                        <div className="modal-actions">
+                            <button
+                                className="cancel-btn"
+                                onClick={closeEditModal}
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                className="confirm-edit-btn"
+                                onClick={saveChanges}
+                            >
+                                Save Changes
                             </button>
                         </div>
                     </div>

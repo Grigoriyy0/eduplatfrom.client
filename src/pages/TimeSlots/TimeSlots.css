@@ -395,3 +395,134 @@
         width: 100%;
     }
 }
+
+/* Модалка редактирования */
+.edit-modal {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    max-width: 450px;
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+    background-color: white;
+}
+
+.form-label {
+    display: block;
+    color: black;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 14px;
+    background-color: white;
+}
+
+.form-select, .form-input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.2s ease;
+    background: white;
+}
+
+.form-select:focus, .form-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.current-info {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 20px 0;
+    border-left: 4px solid #3b82f6;
+}
+
+.current-info h4 {
+    color: black;
+    margin-bottom: 12px;
+    font-size: 16px;
+    background-color: white;
+}
+
+.current-info div {
+    margin-bottom: 6px;
+    color: black;
+    font-size: 14px;
+    background-color: white;
+}
+
+.current-info div:last-child {
+    margin-bottom: 0;
+}
+
+.current-info strong {
+    color: black;
+    background-color: white;
+}
+
+.confirm-edit-btn {
+    background: #10b981;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 120px;
+}
+
+.confirm-edit-btn:hover {
+    background: #059669;
+    transform: translateY(-1px);
+}
+
+.confirm-edit-btn:active {
+    transform: translateY(0);
+}
+
+/* Адаптивность для модалок */
+@media (max-width: 480px) {
+    .confirmation-modal,
+    .edit-modal {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+    }
+
+    .cancel-btn,
+    .confirm-delete-btn,
+    .confirm-edit-btn {
+        min-width: auto;
+        width: 100%;
+    }
+
+    .form-select,
+    .form-input {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
+/* Улучшения для select и input */
+.form-select {
+    cursor: pointer;
+}
+
+.form-input[type="time"] {
+    font-family: inherit;
+}
