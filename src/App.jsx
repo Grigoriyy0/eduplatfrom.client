@@ -5,6 +5,7 @@ import MainPage from "./pages/MainPage/MainPage.jsx";
 import "./App.css"
 import ProtectedRoute from "./utils/ProtectedRoute.jsx";
 import LoginPage from "./pages/Login/LoginPage.jsx";
+import TimeSlots from "./pages/TimeSlots/TimeSlots.jsx";
 
 function App() {
     return (
@@ -31,6 +32,12 @@ function App() {
                         path="/calendar"
                         element={
                             <ProtectedRoute component={Calendar} />
+                        }
+                    />s
+                    <Route
+                        path="/time-slots"
+                        element={
+                            <ProtectedRoute component={TimeSlots} />
                         }
                     />
                     <Route path="/signin" element={<LoginPage />} />
