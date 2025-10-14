@@ -11,6 +11,39 @@ function TimeSlots() {
     const [deleteModal, setDeleteModal] = useState({ isOpen: false, slot: null });
     const [editModal, setEditModal] = useState({ isOpen: false, slot: null });
 
+    // Функция для вычисления продолжительности в минутах
+    const calculateDuration = (startTime, endTime) => {
+        // Преобразуем время в минуты
+        const startMinutes = timeToMinutes(startTime);
+        const endMinutes = timeToMinutes(endTime);
+
+        // Вычисляем разницу
+        const duration = endMinutes - startMinutes;
+
+        // Форматируем в часы и минуты
+        return formatDuration(duration);
+    };
+
+// Функция для преобразования времени в минуты
+    const timeToMinutes = (timeString) => {
+        const [hours, minutes, seconds] = timeString.split(':').map(Number);
+        return hours * 60 + minutes;
+    };
+
+// Функция для форматирования продолжительности
+    const formatDuration = (minutes) => {
+        const hours = Math.floor(minutes / 60);
+        const mins = minutes % 60;
+
+        if (hours === 0) {
+            return `${mins} min`;
+        } else if (mins === 0) {
+            return `${hours}h`;
+        } else {
+            return `${hours}h ${mins}m`;
+        }
+    };
+
     // Функция для преобразования дня недели из числа в текст
     const getDayName = (dayNumber) => {
         const days = [
@@ -194,15 +227,15 @@ function TimeSlots() {
                                             {formatTime(slot.startTime)} - {formatTime(slot.endTime)}
                                         </div>
                                         <div className="duration">
-                                            Duration: {formatTime(slot.duration)}
+                                            Duration: {calculateDuration(slot.startTime, slot.endTime)}
                                         </div>
                                     </div>
 
                                     <div className="time-slot-footer">
-                                        {slot.student ? (
+                                        {slot.studentName ? (
                                             <div className="student-info">
                                                 <span className="student-icon">👤</span>
-                                                {slot.student.name || 'Student'}
+                                                {slot.studentName || 'Student'}
                                             </div>
                                         ) : (
                                             <div className="available-badge">Available</div>
@@ -321,7 +354,7 @@ function TimeSlots() {
                             <h4>Current Information:</h4>
                             <div><strong>Day:</strong> {getDayName(editModal.slot.day)}</div>
                             <div><strong>Time:</strong> {formatTime(editModal.slot.startTime)} - {formatTime(editModal.slot.endTime)}</div>
-                            <div><strong>Duration:</strong> {formatTime(editModal.slot.duration)}</div>
+                            <div><strong>Duration:</strong> {calculateDuration(editModal.slot.startTime, editModal.slot.endTime)}</div>
                         </div>
 
                         <div className="modal-actions">
