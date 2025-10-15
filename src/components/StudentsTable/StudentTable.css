@@ -65,7 +65,7 @@
 }
 
 .st-col-name {
-    min-width: 340px;
+    min-width: 200px;
 }
 
 .st-col-price {
@@ -91,6 +91,7 @@
 
 /* Ячейка с именем */
 .st-name-cell {
+    width: 120px;
     align-items: center;
     gap: 12px;
 }
@@ -314,6 +315,23 @@
 .confirm-delete-btn:hover {
     background: #c0392b;
     transform: translateY(-2px);
+}
+
+.add-time-slot-btn{
+    background: white;
+    color: black;
+    padding: 12px 24px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 120px;
+    font-size: .85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .confirm-cancel-btn {

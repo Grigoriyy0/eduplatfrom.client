@@ -22,10 +22,9 @@ export default function StudentsTable({
     const[notification, setNotification] = useState(null);
 
     // Edit form state
-    const [editFirstName, setEditFirstName] = useState("");
-    const [editLastName, setEditLastName] = useState("");
+    const [editName, setEditName] = useState("");
     const [editLessonPrice, setEditLessonPrice] = useState(0);
-    const [editEmail, setEditEmail] = useState("");
+    const [editTimeZone, setEditTimeZone] = useState("");
     const [editTelegram, setEditTelegram] = useState("");
     const [editSubscription, setEditSubscription] = useState(0);
     const [editPaidLessons, setEditPaidLessons] = useState(0);
@@ -76,10 +75,9 @@ export default function StudentsTable({
 
     useEffect(() => {
         if (selectedStudent) {
-            setEditFirstName(selectedStudent.firstName ?? "");
-            setEditLastName(selectedStudent.lastName ?? "");
+            setEditName(selectedStudent.name ?? "");
+            setEditTimeZone(selectedStudent.timeZone ?? "");
             setEditLessonPrice(selectedStudent.lessonPrice ?? 0);
-            setEditEmail(selectedStudent.email ?? "");
             setEditTelegram(selectedStudent.telegram ?? "");
             setEditSubscription(selectedStudent.subscribedLessonsCount ?? 0);
             setEditPaidLessons(selectedStudent.paidLessonsCount ?? 0);
@@ -92,10 +90,9 @@ export default function StudentsTable({
             method: "PUT",
             body: JSON.stringify({
                 studentId: selectedStudent.studentId,
-                firstName: editFirstName,
-                lastName: editLastName,
-                email: editEmail,
+                name: editName,
                 telegram: editTelegram,
+                timeZone: editTimeZone,
                 paidLessonsCount: editPaidLessons,
                 subscribedLessonsCount: editSubscription,
                 lessonPrice: editLessonPrice,
@@ -106,16 +103,16 @@ export default function StudentsTable({
             }
         }).then(r => {
             if (r.ok) {
-                setNotification("Данные ученика обновлены ✅");
+                setNotification("Student information successfully updated ✅");
                 setTimeout(() => {
                     window.location.reload();
                 }, 1000);
             } else {
-                setNotification("Ошибка при обновлении данных ❌");
+                setNotification("Error during updating student ❌");
             }
         }).catch(err => {
             console.error(err);
-            setNotification("Ошибка при обновлении данных ❌");
+            setNotification("Error during updating student ❌");
         });
     };
 
@@ -215,7 +212,7 @@ export default function StudentsTable({
                     <thead>
                     <tr>
                         <th className="st-col-name">Name</th>
-                        <th>Email</th>
+                        <th>Time zone</th>
                         <th>Telegram</th>
                         <th className="paid-sub">Paid / Subscribed</th>
                         <th className="st-col-price">Lesson price</th>
@@ -239,12 +236,12 @@ export default function StudentsTable({
                             <tr key={s.studentId} className="st-row" onClick={() => onRowClick?.(s)}>
                                 <td className="st-name-cell">
                                     <div className="st-name-block">
-                                        <div className="st-name">{s.firstName} {s.lastName}</div>
+                                        <div className="st-name">{s.name}</div>
                                         <div className="st-subtext">ID: {s.studentId.slice(0, 8)}</div>
                                     </div>
                                 </td>
 
-                                <td className="st-muted">{s.email}</td>
+                                <td className="st-muted">{s.timeZone}</td>
 
                                 <td className="st-muted">{s.telegram ?? "-"}</td>
 
@@ -337,9 +334,9 @@ export default function StudentsTable({
                 <div className="modal-overlay" onClick={() => setSelectedStudent(null)}>
                     <div className="modal" onClick={(e) => e.stopPropagation()}>
                         <h3 className="lesson-modal-info">Student</h3>
-                        <p className="lesson-modal-info">Name <strong className="lesson-modal-info">{selectedStudent.firstName} {selectedStudent.lastName}</strong></p>
-                        <p className="lesson-modal-info">Lesson price<strong className="lesson-modal-info">{selectedStudent.lessonPrice}</strong></p>
-                        <p className="lesson-modal-info">Email <strong className="lesson-modal-info">{selectedStudent.email}</strong></p>
+                        <p className="lesson-modal-info">Name <strong className="lesson-modal-info">{selectedStudent.name}</strong></p>
+                        <p className="lesson-modal-info">Time zone <strong className="lesson-modal-info">{selectedStudent.timeZone}</strong></p>
+                        <p className="lesson-modal-info">Lesson price <strong className="lesson-modal-info">{selectedStudent.lessonPrice}</strong></p>
                         <p className="lesson-modal-info">Subscribed lessons count <strong className="lesson-modal-info">{selectedStudent.subscribedLessonsCount}</strong></p>
 
                         <div className="modal-actions">
@@ -349,7 +346,7 @@ export default function StudentsTable({
                             <button className="complete-btn" onClick={() => { setIsPaymentOpen(true); }}>
                                 Add payment
                             </button>
-                            <button className="complete-btn" onClick={() => { setIsTimeSlotOpen(true); }}>
+                            <button className="add-time-slot-btn" onClick={() => { setIsTimeSlotOpen(true); }}>
                                 Add time slot
                             </button>
                         </div>
@@ -369,12 +366,7 @@ export default function StudentsTable({
                         <div className="modal-form">
                             <div className="form-row">
                                 <label>Name</label>
-                                <input type="text" className="add-stdnt-inpt" value={editFirstName} onChange={(e) => setEditFirstName(e.target.value)} />
-                            </div>
-
-                            <div className="form-row">
-                                <label>Surname</label>
-                                <input type="text" className="add-stdnt-inpt" value={editLastName} onChange={(e) => setEditLastName(e.target.value)} />
+                                <input type="text" className="add-stdnt-inpt" value={editName} onChange={(e) => setEditName(e.target.value)} />
                             </div>
 
                             <div className="form-row">
@@ -383,8 +375,8 @@ export default function StudentsTable({
                             </div>
 
                             <div className="form-row">
-                                <label>Email</label>
-                                <input type="text" className="add-stdnt-inpt" value={editEmail} onChange={(e) => setEditEmail(e.target.value)} />
+                                <label>Time zone</label>
+                                <input type="text" className="add-stdnt-inpt" value={editTimeZone} onChange={(e) => setEditTimeZone(e.target.value)} />
                             </div>
 
                             <div className="form-row">
