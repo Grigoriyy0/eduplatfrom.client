@@ -11,26 +11,21 @@ function TimeSlots() {
     const [deleteModal, setDeleteModal] = useState({ isOpen: false, slot: null });
     const [editModal, setEditModal] = useState({ isOpen: false, slot: null });
 
-    // Функция для вычисления продолжительности в минутах
     const calculateDuration = (startTime, endTime) => {
-        // Преобразуем время в минуты
+
         const startMinutes = timeToMinutes(startTime);
         const endMinutes = timeToMinutes(endTime);
 
-        // Вычисляем разницу
         const duration = endMinutes - startMinutes;
 
-        // Форматируем в часы и минуты
         return formatDuration(duration);
     };
 
-// Функция для преобразования времени в минуты
     const timeToMinutes = (timeString) => {
         const [hours, minutes, seconds] = timeString.split(':').map(Number);
         return hours * 60 + minutes;
     };
 
-// Функция для форматирования продолжительности
     const formatDuration = (minutes) => {
         const hours = Math.floor(minutes / 60);
         const mins = minutes % 60;
@@ -44,7 +39,6 @@ function TimeSlots() {
         }
     };
 
-    // Функция для преобразования дня недели из числа в текст
     const getDayName = (dayNumber) => {
         const days = [
             'Sunday',
@@ -58,23 +52,19 @@ function TimeSlots() {
         return days[dayNumber] || `Day ${dayNumber}`;
     };
 
-    // Функция для форматирования времени (убираем секунды)
     const formatTime = (timeString) => {
-        return timeString.slice(0, 5); // Берем только часы и минуты
+        return timeString.slice(0, 5);
     };
 
-    // Открытие модалки удаления
     const openDeleteModal = (slot, e) => {
         e.stopPropagation();
         setDeleteModal({ isOpen: true, slot });
     };
 
-    // Закрытие модалки удаления
     const closeDeleteModal = () => {
         setDeleteModal({ isOpen: false, slot: null });
     };
 
-    // Подтверждение удаления
     const confirmDelete = () => {
         if (deleteModal.slot) {
             handleDelete(deleteModal.slot.id);
@@ -82,7 +72,6 @@ function TimeSlots() {
         }
     };
 
-    // Открытие модалки редактирования
     const openEditModal = (slot, e) => {
         e.stopPropagation();
         setEditModal({
@@ -96,12 +85,10 @@ function TimeSlots() {
         });
     };
 
-    // Закрытие модалки редактирования
     const closeEditModal = () => {
         setEditModal({ isOpen: false, slot: null });
     };
 
-    // Обработчик изменения полей в модалке редактирования
     const handleEditChange = (field, value) => {
         setEditModal(prev => ({
             ...prev,
@@ -112,7 +99,6 @@ function TimeSlots() {
         }));
     };
 
-    // Сохранение изменений
     const saveChanges = () => {
         if (editModal.slot) {
             handleEdit(editModal.slot);
@@ -147,7 +133,6 @@ function TimeSlots() {
     }
 
     function handleEdit(updatedSlot) {
-        // Добавляем секунды к времени для корректного формата API
         const slotData = {
             ...updatedSlot,
             timeSlotId : updatedSlot.id,

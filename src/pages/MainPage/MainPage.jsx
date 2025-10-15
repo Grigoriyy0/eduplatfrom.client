@@ -33,7 +33,7 @@ function MainPage() {
                         <p className="chart-payload">
                             {salaryLoading ? 'Loading...' : 
                              salaryError ? 'Error loading data' :
-                             `${salaryData?.expectedSalary ?? 0} RUB`}
+                             `${salaryData?.expectedSalary ?? 0} HKD`}
                         </p>
 
                     </div>
@@ -44,7 +44,7 @@ function MainPage() {
                         <p className="chart-payload">
                             {salaryLoading ? 'Loading...' : 
                              salaryError ? 'Error loading data' :
-                             `${salaryData?.actualSalary ?? 0} RUB`}
+                             `${salaryData?.actualSalary ?? 0} HKD`}
                         </p>
                         </p>
                     </div>
