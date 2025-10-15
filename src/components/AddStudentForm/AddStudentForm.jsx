@@ -1,11 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 
 function AddStudentForm({ onCloseAction, onNotificationSet }) {
 
-    const[firstName, setFirstName] = React.useState("");
-    const[lastName, setLastName] = React.useState("");
+    const[name, setName] = useState("");
+    const[timeZone, setTimeZone] = useState("");
     const[lessonPrice, setLessonPrice] = React.useState(0);
-    const[email, setEmail] = React.useState("");
     const[telegram, setTelegram] = React.useState("");
     const[subscription, setSubscription] = React.useState(0);
     const[paidLessons, setPaidLessons] = React.useState(0);
@@ -26,10 +25,9 @@ function AddStudentForm({ onCloseAction, onNotificationSet }) {
         fetch(`${ApiKey}/students/add/`, {
             method: "POST",
             body: JSON.stringify({
-                "firstName": firstName,
-                "lastName": lastName,
-                "email": email,
+                "name": name,
                 "telegram": telegram,
+                "timeZone": timeZone,
                 "paidLessonsCount": paidLessons,
                 "subscribedLessonsCount": subscription,
                 "lessonPrice": lessonPrice,
@@ -62,24 +60,21 @@ function AddStudentForm({ onCloseAction, onNotificationSet }) {
                 <h3 className="modal-title">Create student</h3>
 
                 <div className="modal-form">
+
                     <div className="form-row">
-                        <label>First name</label>
-                        <input type="text" className="add-stdnt-inpt" onChange={(e) => setFirstName(e.target.value)} />
+                        <label>Name</label>
+                        <input type="text" className="add-stdnt-inpt" onChange={(e) => setName(e.target.value)}/>
                     </div>
 
                     <div className="form-row">
-                        <label>Last name</label>
-                        <input type="text" className="add-stdnt-inpt" onChange={(e) => setLastName(e.target.value)} />
+                        <label>Time zone</label>
+                        <input type="text" className="add-stdnt-inpt" onChange={(e) => setTimeZone(e.target.value)}/>
                     </div>
+
 
                     <div className="form-row">
                         <label>Lesson price</label>
                         <input type="text" className="add-stdnt-inpt" onChange={(e) => setLessonPrice(parseInt(e.target.value))}/>
-                    </div>
-
-                    <div className="form-row">
-                        <label>Email</label>
-                        <input type="text" className="add-stdnt-inpt" onChange={(e) => setEmail(e.target.value)}/>
                     </div>
 
                     <div className="form-row">
