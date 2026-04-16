@@ -5,21 +5,22 @@ import "./CustomCalendar.css";
 
 dayjs.extend(customParseFormat);
 
-const PIXELS_PER_HOUR = 60; // масштаб — 1 час = 60px
+const PIXELS_PER_HOUR = 60; 
 const PIXELS_PER_MINUTE = PIXELS_PER_HOUR / 60;
-const START_HOUR = 8; // начинаем с 8:00
-const END_HOUR = 24; // заканчиваем в 24:00
-const HOURS_TO_DISPLAY = END_HOUR - START_HOUR; // количество отображаемых часов
+const START_HOUR = 8; 
+const END_HOUR = 24; 
+const HOURS_TO_DISPLAY = END_HOUR - START_HOUR; 
 
 export default function CustomCalendar({ lessons }) {
 
     const [weekStart, setWeekStart] = useState(dayjs().startOf("week"));
-    const [selectedLesson, setSelectedLesson] = useState(null); // выбранный урок
+    const [selectedLesson, setSelectedLesson] = useState(null); 
     const [notification, setNotification] = useState(null);
     const [rescheduleMode, setRescheduleMode] = useState(false);
     const [newDate, setNewDate] = useState("");
     const [newStart, setNewStart] = useState("");
     const [newEnd, setNewEnd] = useState("");
+    const [isCompleted, setIsCompleted] = useState(false);
 
     const ApiKey = import.meta.env.VITE_API_KEY;
 
@@ -31,7 +32,7 @@ export default function CustomCalendar({ lessons }) {
     const token = localStorage.getItem("accessToken");
 
     const handleDelete = (lesson) => {
-        fetch(`${ApiKey}/lessons/cancel`, {
+        fetch(`${ApiKey}/lessons`, {
             method: "DELETE",
             body: JSON.stringify({
                 lessonId: lesson.lessonId,
@@ -43,8 +44,8 @@ export default function CustomCalendar({ lessons }) {
         })
             .then(r => {
                 if (r.ok) {
-                    setNotification("Урок удалён ✅");
-                    // через 1 сек обновим страницу
+                    setNotification("Lesson deleted ✅");
+                    
                     setTimeout(() => {
                         window.location.reload();
                     }, 1000);
@@ -61,7 +62,6 @@ export default function CustomCalendar({ lessons }) {
     };
 
     const openReschedule = (lesson) => {
-        // Заполняем новые значения из урока
         setNewDate(dayjs(lesson.date).format("YYYY-MM-DD"));
         setNewStart(dayjs(lesson.startTime, "HH:mm:ss").format("HH:mm:ss"));
         setNewEnd(dayjs(lesson.endTime, "HH:mm:ss").format("HH:mm:ss"));
@@ -77,13 +77,14 @@ export default function CustomCalendar({ lessons }) {
             newEnd
         });
 
-        fetch(`${ApiKey}/lessons/reschedule`, {
+        fetch(`${ApiKey}/lessons`, {
             method: "POST",
             body: JSON.stringify({
                 "lessonId" : selectedLesson.lessonId,
                 "date" : newDate,
                 "startTime" : newStart,
                 "endTime" : newEnd,
+                "isCompleted": selectedLesson.isCompleted,
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -183,7 +184,7 @@ export default function CustomCalendar({ lessons }) {
                                 const start = dayjs(`${l.date} ${l.startTime}`, "YYYY-MM-DD HH:mm:ss");
                                 const end = dayjs(`${l.date} ${l.endTime}`, "YYYY-MM-DD HH:mm:ss");
 
-                                // Вычисляем позицию относительно начала дня (8:00)
+                                
                                 const startOfDisplayDay = start.startOf("day").add(START_HOUR, "hour");
                                 const minutesFromTop = start.diff(startOfDisplayDay, "minutes");
                                 const lessonDuration = end.diff(start, "minutes");
@@ -206,7 +207,6 @@ export default function CustomCalendar({ lessons }) {
                 ))}
             </div>
 
-            {/* Модалка */}
             {selectedLesson && (
                 <div className="modal-overlay" onClick={() => setSelectedLesson(null)}>
                     <div className="modal" onClick={(e) => e.stopPropagation()}>
@@ -227,14 +227,12 @@ export default function CustomCalendar({ lessons }) {
                 </div>
             )}
 
-            {/* Уведомление */}
             {notification && (
                 <div className="notification">
                     {notification}
                 </div>
             )}
 
-            {/* Второе модальное окно (перенос) */}
             {selectedLesson && rescheduleMode && (
                 <div className="modal-overlay" onClick={() => setRescheduleMode(false)}>
                     <div className="modal" onClick={(e) => e.stopPropagation()}>
@@ -270,6 +268,7 @@ export default function CustomCalendar({ lessons }) {
                                    onChange={e => setNewEnd(e.target.value)}
                             />
                         </label>
+                        
 
                         <div className="modal-actions modal-actions--reschedule">
                             <button className="reschedule-btn" onClick={handleReschedule}>

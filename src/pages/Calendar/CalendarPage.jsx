@@ -14,7 +14,7 @@ function CalendarPage() {
     const token = localStorage.getItem("accessToken");
 
     useEffect(() => {
-        fetch(`${ApiKey}/lessons/all?criteriaName=month`, {
+        fetch(`${ApiKey}/lessons?criteriaName=month`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
             }

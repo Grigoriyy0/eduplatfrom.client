@@ -48,7 +48,7 @@ export default function StudentsTable({
 
     const handleDeleteConfirm = () => {
 
-        fetch(`${ApiKey}/students/delete/${confirmDelete}`, {
+        fetch(`${ApiKey}/students/${confirmDelete}`, {
             method: "DELETE",
             headers: {
                 Accept: "application/json",
@@ -56,8 +56,7 @@ export default function StudentsTable({
             }
         }).then(r => {
             if (r.ok) {
-                setNotification("Студент удалён ✅");
-                // через 1 сек обновим страницу
+                setNotification("Student deleted ✅");
                 setTimeout(() => {
                     window.location.reload();
                 }, 1000);
@@ -86,7 +85,7 @@ export default function StudentsTable({
 
     const handleUpdateStudent = () => {
         if (!selectedStudent) return;
-        fetch(`${ApiKey}/students/update/`, {
+        fetch(`${ApiKey}/students`, {
             method: "PUT",
             body: JSON.stringify({
                 studentId: selectedStudent.studentId,
@@ -118,7 +117,7 @@ export default function StudentsTable({
 
     const handleAddPayment = () => {
         if (!selectedStudent) return;
-        fetch(`${ApiKey}/students/add-payment/`, {
+        fetch(`${ApiKey}/students/payment`, {
             method: "POST",
             body: JSON.stringify({
                 studentId: selectedStudent.studentId,
@@ -174,7 +173,7 @@ export default function StudentsTable({
             return;
         }
 
-        fetch(`${ApiKey}/time-slots/add/`, {
+        fetch(`${ApiKey}/time-slots`, {
             method: "POST",
             body: JSON.stringify({
                 studentId: selectedStudent.studentId,

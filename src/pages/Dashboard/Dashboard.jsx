@@ -15,7 +15,7 @@ function Dashboard() {
     const[notification, setNotification] = useState(null);
 
     useEffect(() => {
-        fetch(`${ApiKey}/students/all`, {
+        fetch(`${ApiKey}/students`, {
             headers : {
                 "Authorization": `Bearer ${token}`
             }

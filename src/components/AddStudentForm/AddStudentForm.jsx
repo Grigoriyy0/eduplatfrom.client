@@ -22,7 +22,7 @@ function AddStudentForm({ onCloseAction, onNotificationSet }) {
     const token = localStorage.getItem("accessToken");
 
     const handleAddStudent = () => {
-        fetch(`${ApiKey}/students/add/`, {
+        fetch(`${ApiKey}/students`, {
             method: "POST",
             body: JSON.stringify({
                 "name": name,
@@ -40,7 +40,6 @@ function AddStudentForm({ onCloseAction, onNotificationSet }) {
         }).then(r => {
             if (r.ok) {
                 handleSetNotification("Student created ✅");
-                // через 1 сек обновим страницу
                 setTimeout(() => {
                     window.location.reload();
                 }, 1000);

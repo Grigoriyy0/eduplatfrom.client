@@ -12,9 +12,8 @@ function Login() {
     const ApiKey = import.meta.env.VITE_API_KEY;
 
     const handleLogin = async (e) => {
-        e.preventDefault(); // Prevent default form submission behavior
-
-        // Input validation
+        e.preventDefault(); 
+        
         if (!email.trim() || !password.trim()) {
             setError('Please enter both username and password');
             return;

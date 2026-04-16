@@ -14,7 +14,7 @@ export const useTimeSlotsData = (apiKey, token) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`${apiKey}/time-slots/all`, {
+                const response = await fetch(`${apiKey}/time-slots`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
